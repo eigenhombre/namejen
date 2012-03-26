@@ -1,0 +1,13 @@
+# namejen
+
+Markov name generator, patterned after [ref.]
+
+## Usage
+
+TBD
+
+## License
+
+Copyright (C) 2012 John Jacobsen, NPX Designs, Inc.
+
+Distributed under the Eclipse Public License, the same as Clojure.
