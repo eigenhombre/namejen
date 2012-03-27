@@ -49,7 +49,11 @@ M. Banks novel [2].
 
 ## (Continuous) Testing
 
-    lein autoexpect
+Yes, there are a few tests.  I use the excellent expectations module[3] with the Leiningen autoexpect plugin:
+
+    lein autoexpect  # See project.clj and src/namejen/core.clj for setup
+
+[3] https://github.com/jaycfields/expectations
 
 ## License
 
