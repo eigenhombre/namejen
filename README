@@ -1,10 +1,16 @@
 # namejen
 
-Markov name generator, patterned after [ref.]
+Markov name generator, written in Clojure, patterned after 
+http://roguebasin.roguelikedevelopment.org/index.php/Markov_chains_name_generator_in_Python
 
 ## Usage
 
-TBD
+ lein uberjar
+ java -jar namejen-1.0.0-SNAPSHOT-standalone.jar
+
+## Testing
+
+ lein autoexpect
 
 ## License
 
