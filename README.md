@@ -5,12 +5,12 @@ http://roguebasin.roguelikedevelopment.org/index.php/Markov_chains_name_generato
 
 ## Usage
 
- lein uberjar
- java -jar namejen-1.0.0-SNAPSHOT-standalone.jar
+   lein uberjar
+   java -jar namejen-1.0.0-SNAPSHOT-standalone.jar
 
 ## Testing
 
- lein autoexpect
+   lein autoexpect
 
 ## License
 
