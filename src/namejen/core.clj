@@ -1,6 +1,8 @@
 (ns namejen.core
   (:use [clojure.string :only (split-lines lower-case capitalize join)]
         [expectations])
+  (:import (java.io InputStreamReader BufferedReader))
+  (:import (javax.script ScriptEngineManager ScriptEngine))
   (:gen-class))
 
 (defn make-nextmap [chainlen parts]
@@ -56,18 +58,18 @@
           (recur (conj ret choice) (dec n)))))))
 
 (defn name-maker [chainlen namefile]
-  (let [names (map (comp #(str % \newline) lower-case)
+  (let [allnames (map (comp #(str % \newline) lower-case)
                    (split-lines
                     (slurp namefile)))
-        parts (apply concat (map #(partition (inc chainlen) 1 %) names))
+        parts (apply concat (map #(partition (inc chainlen) 1 %) allnames))
         nextmap (make-nextmap chainlen parts)]
     (fn []
-      (let [core (join " "                                              ;; Core names
+      (let [names (join " "                                             ;; Core names
                        (repeatedly (num-names)
                                    #(generate-single-name nextmap)))
             w-title (if (choose-whether 5)                              ;; Add title (Ms., Dr., ...)
-                      (str (prefix) " " core)
-                      core)
+                      (str (prefix) " " names)
+                      names)
             w-gen (if (choose-whether 5)                                ;; Add Jr., III, etc.
                     (str w-title " " (generation))
                     w-title)
@@ -80,9 +82,16 @@
 
 (defn print-lines [l] (doseq [i l] (println i)))
 
+(defn get_resource [nm]
+  "See http://stackoverflow.com/questions/2044394/how-to-load-program-resources-in-clojure"
+  (ClassLoader/getSystemResource nm))
+
 (defn -main []
   (print-lines
-   (repeatedly 500 (name-maker 4 "/Users/jacobsen/Programming/Games/markovnamer/namefiles/all.txt"))))
+   (repeatedly 500
+               (name-maker 4 (get_resource "names.txt")))))
+                           ; (.getFile (clojure.java.io/resource "names.txt"))))))
+                           ; was "/Users/jacobsen/Programming/Games/markovnamer/namefiles/all.txt"
 
 (expect (memberp 0 [0 1 2]) true)
 (expect (memberp 3 [0 1 2]) false)
