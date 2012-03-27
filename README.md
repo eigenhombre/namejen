@@ -13,6 +13,7 @@ input provided, the output seems reminiscent of names from an Iain
 M. Banks novel [2].
 
 [1] http://roguebasin.roguelikedevelopment.org/index.php/Markov_chains_name_generator_in_Python
+
 [2] http://en.wikipedia.org/wiki/Iain_Banks
 
 ## Examples
