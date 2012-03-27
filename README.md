@@ -9,7 +9,35 @@ names suitable for games, writing fiction, naming your pets and kids,
 etc.  Your mileage may vary.
 
 Substituting a different list of source names will change the flavor
-of the names, sometimes dramatically.
+of the names, sometimes dramatically.  
+
+## Examples
+
+    Miss Rite Line
+    Mme. Ilson Huvra Corris Vince Kevyn, Esq.
+    Elix
+    Rlene Tanly
+    Mrs. Thias Otta III, LCPT
+    Gypsy Tewart Jaak Gunter Stie Sr.
+    Ohammad Heodore
+    Anly Inricharleen
+    Erbert Strakash
+    Sr. Marguerite Arissa IV
+    Ruth Gabriel Eresa Tanaka Gang
+    Think Rgot Sir
+    Ohammad Heodore
+    Herr Dmond Ralph
+    Mrs. Kael Olfe
+    Italynnette Ekar, Esq.
+    Awan Mneek Ohong, Ph.D.
+    Orma Ryan Artin Natolerant Imitro
+    Anya Think
+    Ucifer Konstantinos Cobson
+    Raul Well
+    Sehyo Irofumi Vilhelm III
+    Miss Page Steen
+    Sir Ilya Inod Holas Sumu Ncois
+    Main Case, MD
 
 ## Usage
 
