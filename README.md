@@ -41,6 +41,14 @@ M. Banks novel [2].
     Miss Page Steen
     Sir Ilya Inod Holas Sumu Ncois
     Main Case, MD
+    Barryl Tahsin Hyam Ctor Icky
+    Aola Chip, LCPT
+    Sofoklis Deirdre
+    Rwin Butler
+    Argie Less
+    Asanobu Oshua
+    Herr Malloy Jr.
+    Krzysztof Frederick Jr.
 
 ## Usage
 
