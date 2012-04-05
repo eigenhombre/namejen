@@ -40,7 +40,7 @@
             next-all (concat all [next])
             next-next (rand-nth (nextmap next-current))]
         (recur next-current next-all next-next)))))
- 
+
 
 (defn prefix [] (rand-nth ["Dr." "Mr." "Ms." "Mrs." "M." "Miss" "Sr." "Herr" "Mme." "Sir"]))
 (defn generation [] (rand-nth ["Sr." "Jr." "Jr." "I" "II" "III" "III" "IV" "V"]))
@@ -101,7 +101,9 @@
 (defn print-lines [l] (doseq [i l] (println i)))
 
 
-(defn -main []
-  (print-lines
-   (repeatedly 50
-               (name-maker 4 (get_resource "names.txt")))))
+(defn -main [& args]
+  (let [f (first args)
+        n (if (nil? f) 50 (. Integer parseInt f))]
+    (print-lines
+     (repeatedly n
+                 (name-maker 4 (get_resource "names.txt"))))))
