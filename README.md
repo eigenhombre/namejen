@@ -52,8 +52,28 @@ M. Banks novel [2].
 
 ## Usage
 
+To use as a standalone program:
+
     lein uberjar
     java -jar namejen-1.0.0-SNAPSHOT-standalone.jar
+
+To use as a library function, add the following to your project.clj:
+
+    [namejen "0.1.0-SNAPSHOT"]
+
+Then, in your code's namespace declaration:
+
+    (:use [namejen.core :only [get-default-name-data name-maker]])
+
+Finally,
+
+    (def make-name (name-maker 4 (get-default-name-data)))
+
+will create a function which will return a new name each time.  Changing
+(get-default-name-data) to some other buffer of data (names separated
+by newliness) will change the behavior of the name generator, as will
+changing the Markov chain length from 4 to 3 or 5.
+
 
 ## (Continuous) Testing
 
