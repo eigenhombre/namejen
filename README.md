@@ -69,10 +69,16 @@ Finally,
 
     (def make-name (name-maker 4 (get-default-name-data)))
 
-will create a function which will return a new name each time.  Changing
-(get-default-name-data) to some other buffer of data (names separated
-by newliness) will change the behavior of the name generator, as will
-changing the Markov chain length from 4 to 3 or 5.
+will create a function which will return a new name each time it is
+called.
+
+The function get-default-name-data returns a long list of names stored
+in the library's jar file, separated by newlines; 4 is the Markov
+chain length.  You can play with different name inputs by simply
+supplying a long string of names (again, separated by newlines)
+instead of the call to get-default-name-data.  The longer the Markov
+chain length, the more the names will sound like "real" names but the
+less variations you will get.
 
 
 ## (Continuous) Testing
