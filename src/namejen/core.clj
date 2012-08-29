@@ -1,8 +1,6 @@
 (ns namejen.core
   (:use [clojure.string :only (split-lines lower-case capitalize join)]
         [expectations])
-  (:import (java.io InputStreamReader BufferedReader))
-  (:import (javax.script ScriptEngineManager ScriptEngine))
   (:gen-class))
 
 (expectations/disable-run-on-shutdown)
@@ -65,45 +63,53 @@
           (recur ret n)
           (recur (conj ret choice) (dec n)))))))
 
+
 (expect (set (take-n 3 [:a :b :c])) #{:a :b :c})
 (expect (in? (first (take-n 1 [:a :b :c])) [:a :b :c]) true)
 (expect (in? (first (take-n 1 [:a :b :c])) [:d :e :f]) false)
 
 
-(defn name-maker [chainlen namefile]
+(defn name-maker [chainlen name-data]
   (let [allnames (map (comp #(str % \newline) lower-case)
-                   (split-lines
-                    (slurp namefile)))
+                   (split-lines name-data))
         parts (apply concat (map #(partition (inc chainlen) 1 %) allnames))
         nextmap (make-nextmap chainlen parts)]
     (fn []
-      (let [names (join " "                                             ;; Core names
+      (let [core-names (join " "
                        (repeatedly (num-names)
                                    #(generate-single-name nextmap)))
-            with-title (if (choose-whether 5)                           ;; Add title (Ms., Dr., ...)
-                         (str (prefix) " " names)
-                         names)
-            with-gen (if (choose-whether 5)                             ;; Add Jr., III, etc.
+            ; Add title (Ms., Dr., ...):
+            with-title (if (choose-whether 5)
+                         (str (prefix) " " core-names)
+                         core-names)
+            ; Add Jr., III, etc.:
+            with-gen (if (choose-whether 5)
                     (str with-title " " (generation))
                     with-title)
-            suffixes (set (take-n (rand-int (rand-int 3)) suffixes))    ;; Add Ph.D., ...
-            with-suffixes (if (empty? suffixes)
-                            with-gen
-                            (str with-gen ", " (join ", " suffixes)))]
-        with-suffixes))))
+            ; Add Ph.D., ...:
+            suffixes (set (take-n (rand-int (rand-int 3)) suffixes))]
+        (if (empty? suffixes)
+          with-gen
+          (str with-gen ", " (join ", " suffixes)))))))
 
 
 (defn get_resource [nm]
-  "See http://stackoverflow.com/questions/2044394/how-to-load-program-resources-in-clojure"
+  "See http://stackoverflow.com/questions/2044394/
+   how-to-load-program-resources-in-clojure"
   (ClassLoader/getSystemResource nm))
 
 
 (defn print-lines [l] (doseq [i l] (println i)))
 
 
+(defn get-default-name-data []
+  (slurp (get_resource "names.txt")))
+
+
 (defn -main [& args]
   (let [f (first args)
         n (if (nil? f) 50 (. Integer parseInt f))]
-    (print-lines
-     (repeatedly n
-                 (name-maker 4 (get_resource "names.txt"))))))
+    (->> (get-default-name-data)
+         (name-maker 4)
+         (repeatedly n)
+         print-lines)))
