@@ -6,4 +6,4 @@
   :main namejen.core
   :min-lein-version "2.0.0"
   :plugins [[lein-expectations "0.0.1"] [lein-autoexpect "0.1.1"]]
-  :description "A Markov-chain-based name generator for games, fiction, etcetra")
+  :description "A Markov-chain-based name generator for games, fiction, et cetera")
