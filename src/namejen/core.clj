@@ -4,11 +4,13 @@
 
 
 (defn make-nextmap
-  "Make a map of next values in a Markov chain, given a vector of
-   input sequences with length==chainlen+1, where the first <chainlen>
-   values of each are the keys, and the values are a vector of the
-   last letter seen following that sequence.  For example,
-   ((a l f r) (a l f i)) -> {(a l f) [r i]}"
+  "
+  Make a map of next values in a Markov chain, given a vector of
+  input sequences with length==chainlen+1, where the first <chainlen>
+  values of each are the keys, and the values are a vector of the
+  last letter seen following that sequence.  For example,
+  ((a l f r) (a l f i)) -> {(a l f) [r i]}
+  "
   [chainlen parts]
   (loop [parts parts
          ret {}]
@@ -24,11 +26,13 @@
 
 
 (defn generate-single-name
-  "Generate a name using Markov chain by following choices captured in
-   'nextmap'.  Start with an initial sequence/key randomly chosen from
-   the keys in the map.  Select next letter randomly based on the
-   available ones for that key.  Collect all letters this way, adding
-   them and changing the current key until \newline is reached."
+  "
+  Generate a name using Markov chain by following choices captured in
+  'nextmap'.  Start with an initial sequence/key randomly chosen from
+  the keys in the map.  Select next letter randomly based on the
+  available ones for that key.  Collect all letters this way, adding
+  them and changing the current key until \newline is reached.
+  "
   [nextmap]
   (loop [current (rand-nth (keys nextmap))
          all current
@@ -68,22 +72,22 @@
 
 (defn name-maker [chainlen name-data]
   (let [allnames (map (comp #(str % \newline) lower-case)
-                   (split-lines name-data))
+                      (split-lines name-data))
         parts (apply concat (map #(partition (inc chainlen) 1 %) allnames))
         nextmap (make-nextmap chainlen parts)]
     (fn []
       (let [core-names (join " "
-                       (repeatedly (num-names)
-                                   #(generate-single-name nextmap)))
-            ; Add title (Ms., Dr., ...):
+                             (repeatedly (num-names)
+                                         #(generate-single-name nextmap)))
+            ;; Add title (Ms., Dr., ...):
             with-title (if (choose-whether 5)
                          (str (prefix) " " core-names)
                          core-names)
-            ; Add Jr., III, etc.:
+            ;; Add Jr., III, etc.:
             with-gen (if (choose-whether 5)
-                    (str with-title " " (generation))
-                    with-title)
-            ; Add Ph.D., ...:
+                       (str with-title " " (generation))
+                       with-title)
+            ;; Add Ph.D., ...:
             suffixes (set (take-n (rand-int (rand-int 3)) suffixes))]
         (if (empty? suffixes)
           with-gen

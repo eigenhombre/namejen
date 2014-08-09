@@ -54,16 +54,18 @@ M. Banks novel [2].
 
 To use as a standalone program:
 
+    lein run
+    # or...
     lein uberjar
-    java -jar namejen-1.0.0-SNAPSHOT-standalone.jar
+    java -jar namejen-0.1.0-standalone.jar
 
 To use as a library function, add the following to your project.clj:
 
-    [namejen "0.1.0-SNAPSHOT"]
+    [eigenhombre/namejen "0.1.0"]
 
 Then, in your code's namespace declaration:
 
-    (:use [namejen.core :only [get-default-name-data name-maker]])
+    (:require [namejen.core :refer [get-default-name-data name-maker]])
 
 Finally,
 
@@ -80,17 +82,10 @@ instead of the call to get-default-name-data.  The longer the Markov
 chain length, the more the names will sound like "real" names but the
 less variations you will get.
 
-
-## (Continuous) Testing
-
-Yes, there are a few tests.  I use the excellent expectations module[3] with the Leiningen autoexpect plugin:
-
-    lein autoexpect  # See project.clj and src/namejen/core.clj for setup
-
-[3] https://github.com/jaycfields/expectations
-
 ## License
 
 Copyright (C) 2012 John Jacobsen.
 
 Distributed under the Eclipse Public License, the same as Clojure.
+
+THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT OF THIRD PARTY RIGHTS. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
