@@ -40,23 +40,33 @@
   (map-for-name-data 4 (get-default-name-data)))
 
 
-(defn generate-single-name
+(defn generate-sequence
   "
-  Generate a name using Markov chain by following choices captured in
+  Generate a sequence using Markov chain by following choices captured in
   'nextmap'.  Start with an initial sequence/key randomly chosen from
   the keys in the map.  Select next letter randomly based on the
   available ones for that key.  Collect all letters this way, adding
-  them and changing the current key until \newline is reached.
+  them and changing the current key until STOP-STATE symbol is reached.
+  "
+  [nextmap]
+  (loop [current (rand-nth (keys nextmap))
+         all current
+         next (rand-nth (vec (nextmap current)))]
+    (if (= next 'STOP-STATE)
+      all
+      (let [next-current (concat (rest current) [next])
+            next-all (concat all [next])
+            next-next (rand-nth (vec (nextmap next-current)))]
+        (recur next-current next-all next-next)))))
+
+
+(defn generate-single-name
+  "
+  For a sequence of letters, captialize and return as string.
   "
   ([]
    (generate-single-name default-nextmap))
   ([nextmap]
-   (loop [current (rand-nth (keys nextmap))
-          all current
-          next (rand-nth (vec (nextmap current)))]
-     (if (= next 'STOP-STATE)
-       (clojure.string/capitalize (apply str all))
-       (let [next-current (concat (rest current) [next])
-             next-all (concat all [next])
-             next-next (rand-nth (vec (nextmap next-current)))]
-         (recur next-current next-all next-next))))))
+   (->> (generate-sequence nextmap)
+        (apply str)
+        clojure.string/capitalize)))
