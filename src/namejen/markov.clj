@@ -1,6 +1,14 @@
 (ns namejen.markov)
 
 
+(defn add-to-chain [chainlen chainmap chain]
+  (let [key (take chainlen chain)
+        nxt (nth chain chainlen)
+        lookup (chainmap key)
+        curvec (if lookup lookup #{})]
+    (assoc chainmap key (conj curvec nxt))))
+
+
 (defn make-nextmap
   "
   Make a map of next values in a Markov chain, given a vector of
@@ -11,22 +19,12 @@
   `((a l f r) (a l f i)) --> {(a l f) [r i]}`
   "
   [chainlen parts]
-  (loop [parts parts
-         ret {}]
-    (let [chain (first parts)
-          key (take chainlen chain)
-          next (nth chain chainlen)
-          lookup (ret key)
-          curvec (if lookup lookup [])]
-      (if chain
-        (recur (rest parts)
-               (assoc ret key (conj curvec next)))
-        ret))))
+  (reduce (partial add-to-chain chainlen) {} parts))
 
 
 (defn map-for-name-data [chainlen name-data]
-  (let [allnames (map (comp #(str % \newline) clojure.string/lower-case)
-                      name-data)
+  (let [lc-names (map (comp vec clojure.string/lower-case) name-data)
+        allnames (map #(conj % 'STOP-STATE) lc-names)
         parts (apply concat (map #(partition (inc chainlen) 1 %) allnames))]
     (make-nextmap chainlen parts)))
 
@@ -55,10 +53,10 @@
   ([nextmap]
    (loop [current (rand-nth (keys nextmap))
           all current
-          next (rand-nth (nextmap current))]
-     (if (= next \newline)
+          next (rand-nth (vec (nextmap current)))]
+     (if (= next 'STOP-STATE)
        (clojure.string/capitalize (apply str all))
        (let [next-current (concat (rest current) [next])
              next-all (concat all [next])
-             next-next (rand-nth (nextmap next-current))]
+             next-next (rand-nth (vec (nextmap next-current)))]
          (recur next-current next-all next-next))))))
