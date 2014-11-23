@@ -1,0 +1,1 @@
+(ns namejen.core-test)
