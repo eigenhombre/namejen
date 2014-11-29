@@ -1,5 +1,7 @@
 (ns namejen.fun
-  (:require [namejen.markov :refer [generate-single-name]]))
+  (:require [namejen.markov :refer [generate-single-name
+                                    get-name-data
+                                    map-for-name-data]]))
 
 
 (defn prefix [] (rand-nth ["Dr." "Mr." "Ms." "Mrs." "M."
@@ -29,11 +31,20 @@
           (recur (conj ret choice) (dec n)))))))
 
 
+(defn get-default-name-data []
+  (get-name-data "names.txt"))
+
+
+(def default-nextmap
+  (map-for-name-data 4 (get-default-name-data)))
+
+
 (defn funny-name-maker []
   (repeatedly
    (fn []
-     (let [core-names (clojure.string/join " "
-                            (repeatedly (num-names) generate-single-name))
+     (let [genname (partial generate-single-name default-nextmap)
+           core-names (clojure.string/join " "
+                              (repeatedly (num-names) genname))
            ;; Add title (Ms., Dr., ...):
            with-title (if (choose-whether 5)
                         (str (prefix) " " core-names)

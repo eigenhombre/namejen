@@ -29,15 +29,11 @@
     (make-nextmap chainlen parts)))
 
 
-(defn get-default-name-data []
-  (->> "names.txt"
+(defn get-name-data [f]
+  (->> f
        clojure.java.io/resource
        slurp
        clojure.string/split-lines))
-
-
-(def default-nextmap
-  (map-for-name-data 4 (get-default-name-data)))
 
 
 (defn generate-sequence
@@ -64,9 +60,7 @@
   "
   For a sequence of letters, captialize and return as string.
   "
-  ([]
-   (generate-single-name default-nextmap))
-  ([nextmap]
-   (->> (generate-sequence nextmap)
-        (apply str)
-        clojure.string/capitalize)))
+  [nextmap]
+  (->> (generate-sequence nextmap)
+       (apply str)
+       clojure.string/capitalize))

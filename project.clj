@@ -1,5 +1,5 @@
-(defproject eigenhombre/namejen "0.1.1"
-  :dependencies [[org.clojure/clojure "1.5.1"]]
+(defproject eigenhombre/namejen "0.1.2"
+  :dependencies [[org.clojure/clojure "1.6.0"]]
   :profiles {:dev {:dependencies [[midje "1.6.3"]]}}
   :url "https://github.com/eigenhombre/namejen"
   :resource-paths ["resources"]
