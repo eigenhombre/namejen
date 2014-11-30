@@ -61,7 +61,7 @@ To use as a standalone program:
 
 To use as a library function, add the following to your project.clj:
 
-    [eigenhombre/namejen "0.1.3"]
+[![Clojars Project](http://clojars.org/eigenhombre/namejen/latest-version.svg)](http://clojars.org/eigenhombre/namejen)
 
 Then, in your code's namespace declaration:
 
