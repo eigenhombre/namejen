@@ -61,7 +61,7 @@ To use as a standalone program:
 
 To use as a library function, add the following to your project.clj:
 
-    [eigenhombre/namejen "0.1.0"]
+    [eigenhombre/namejen "0.1.2"]
 
 Then, in your code's namespace declaration:
 
