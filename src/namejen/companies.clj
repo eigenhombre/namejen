@@ -4,11 +4,9 @@
                                     map-for-name-data]]))
 
 
-(defn single-company []
-  (->> "companies.txt"
-       get-name-data
-       (map-for-name-data 4)
-       generate-single-name))
+(def ^:private company-data-map (->> "companies.txt"
+                                     get-name-data
+                                     (map-for-name-data 4)))
 
 
 (defn num-company-names [] (rand-nth [1 1 1 2 2 3 4]))
@@ -31,7 +29,8 @@
 
 (defn gen-company-name-and-website []
   (let [num-names (num-company-names)
-        companies (repeatedly num-names single-company)
+        companies (repeatedly num-names (partial generate-single-name
+                                                 company-data-map))
         compname
         (str (clojure.string/join " " companies)
              (if (zero? (rand-nth (range 4)))
@@ -73,7 +72,6 @@
    ["Olidated Maytag Nova, Inc." "olidatedmaytagnova.com"]
    ["Adio Evrontex Almolive, AG" "adioevrontexalmolive.com"]
    ["Ana-packaging, Incorporated" "ana-packaging.com"])
-
 
 
   )
