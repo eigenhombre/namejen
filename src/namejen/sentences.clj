@@ -23,6 +23,7 @@
   "
   Fetch text, break into a collection of sentences (sequences of tokens).
   "
+  []
   (->> (get-siddhartha)
        (drop 860) ;; FIXME: Make this smarter
        (remove #{\return \"})
