@@ -1,5 +1,5 @@
 (ns namejen.core
-  (:require [namejen.fun :refer [funny-name-maker]])
+  (:require [namejen.names :refer [funny-name-maker]])
   (:gen-class))
 
 

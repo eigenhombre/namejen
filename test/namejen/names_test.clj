@@ -1,6 +1,6 @@
-(ns namejen.fun-test
+(ns namejen.names-test
   (:require [midje.sweet :refer :all]
-            [namejen.fun :refer [funny-name-maker in? take-n]]))
+            [namejen.names :refer [funny-name-maker in? take-n]]))
 
 
 (facts "about in"

@@ -1,4 +1,4 @@
-(ns namejen.fun
+(ns namejen.names
   (:require [namejen.markov :refer [generate-single-name
                                     get-name-data
                                     map-for-name-data]]))
