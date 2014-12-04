@@ -1,7 +1,7 @@
 (ns namejen.names
   (:require [namejen.markov :refer [generate-single-name
                                     get-name-data
-                                    map-for-name-data]]))
+                                    build-map-from-strings]]))
 
 
 (defn prefix [] (rand-nth ["Dr." "Mr." "Ms." "Mrs." "M."
@@ -36,7 +36,7 @@
 
 
 (def default-nextmap
-  (map-for-name-data 4 (get-default-name-data)))
+  (build-map-from-strings 4 (get-default-name-data)))
 
 
 (defn funny-name-maker []

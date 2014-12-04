@@ -1,12 +1,13 @@
 (ns namejen.companies
   (:require [namejen.markov :refer [generate-single-name
                                     get-name-data
-                                    map-for-name-data]]))
+                                    build-map-from-strings]]))
 
 
-(def ^:private company-data-map (->> "companies.txt"
-                                     get-name-data
-                                     (map-for-name-data 4)))
+(def ^:private company-data-map
+  (->> "companies.txt"
+       get-name-data
+       (build-map-from-strings 4)))
 
 
 (defn num-company-names [] (rand-nth [1 1 1 2 2 3 4]))

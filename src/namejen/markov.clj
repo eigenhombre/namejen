@@ -22,11 +22,18 @@
   (reduce (partial add-to-chain chainlen) {} parts))
 
 
-(defn map-for-name-data [chainlen name-data]
-  (let [lc-names (map (comp vec clojure.string/lower-case) name-data)
-        allnames (map #(conj % 'STOP-STATE) lc-names)
-        parts (apply concat (map #(partition (inc chainlen) 1 %) allnames))]
-    (make-nextmap chainlen parts)))
+(defn build-map-from-seqs [chainlen input-sequences]
+  (make-nextmap chainlen (->> input-sequences
+                              (map #(conj % 'STOP-STATE))
+                              (map #(partition (inc chainlen) 1 %))
+                              (apply concat))))
+
+
+(defn build-map-from-strings [chainlen strings]
+  (->> strings
+       (map clojure.string/lower-case)
+       (map vec)
+       (build-map-from-seqs chainlen)))
 
 
 (defn get-name-data [f]

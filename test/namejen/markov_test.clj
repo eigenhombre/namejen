@@ -1,13 +1,15 @@
 (ns namejen.markov-test
   (:require [midje.sweet :refer :all]
-            [namejen.markov :refer [generate-single-name make-nextmap
-                                    get-name-data map-for-name-data]]))
+            [namejen.markov :refer [generate-single-name
+                                    make-nextmap
+                                    get-name-data
+                                    build-map-from-strings]]))
 
 
 (facts "I can generate a name with the basic name maker"
   (let [nom (->> "names.txt"
                  get-name-data
-                 (map-for-name-data 4)
+                 (build-map-from-strings 4)
                  generate-single-name)]
     (empty? nom) => falsey))
 
