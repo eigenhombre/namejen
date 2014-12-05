@@ -24,6 +24,7 @@
 
 (defn build-map-from-seqs [chainlen input-sequences]
   (make-nextmap chainlen (->> input-sequences
+                              (map vec)
                               (map #(conj % 'STOP-STATE))
                               (map #(partition (inc chainlen) 1 %))
                               (apply concat))))
@@ -32,7 +33,6 @@
 (defn build-map-from-strings [chainlen strings]
   (->> strings
        (map clojure.string/lower-case)
-       (map vec)
        (build-map-from-seqs chainlen)))
 
 
