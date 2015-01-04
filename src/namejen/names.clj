@@ -4,35 +4,31 @@
             [namejen.io :refer [get-name-data]]))
 
 
-(defn prefix [] (rand-nth ["Dr." "Mr." "Ms." "Mrs." "M."
-                           "Miss" "Sr." "Herr" "Mme." "Sir"]))
+(defn gender [] (->> [:male :female]
+                     (repeat 20)
+                     (apply concat)
+                     (concat [:other])
+                     rand-nth))
 
+
+(def male-prefixes (concat (repeat 10 "Mr.")
+                           ["M." "Sr." "Herr" "Sir"]))
+
+
+(def female-prefixes (concat (repeat 10 "Ms.")
+                             ["Miss" "Mrs." "Sra." "Srta." "Fr."]))
+
+
+;; FIXME: Male-heavy.  Female equivalents?
 (defn generation [] (rand-nth ["Sr." "Jr." "Jr."
                                "I" "II" "III" "III" "IV" "V"]))
 
-(def suffixes ["Esq." "Ph.D." "LCPT" "MD" "LMA" "LMT"])
-
-(defn suffix [] (rand-nth ["Esq." "R.N." "Ph.D." "LCPT" "MD" "LMA" "LMT"]))
 
 (defn choose-whether [n] (= (rand-int n) 0))
 
-(defn in? [x l] (not (nil? (some #{x} l))))
 
-(defn num-names [] (rand-nth [1 2 2 2 2 2 2 2 2 2 2 3 3 5]))
-
-
-(defn take-n [n l]
-  (loop [ret [], n n]
-    (if (= n 0)
-      ret
-      (let [choice (rand-nth l)]
-        (if (in? choice ret)
-          (recur ret n)
-          (recur (conj ret choice) (dec n)))))))
-
-
-(defn get-default-name-data []
-  (get-name-data "names.txt"))
+(defn num-names [] (rand-nth (concat (repeat 5 2)
+                                     [1 3 3 4 5])))
 
 
 (defn name-map-from-resource-file [fname]
@@ -41,10 +37,7 @@
        (build-map-from-strings 4)))
 
 
-(def default-nextmap
-  (build-map-from-strings 4 (get-default-name-data)))
-
-
+(def default-nextmap (name-map-from-resource-file "names.txt"))
 (def male-name-map (name-map-from-resource-file "male-names.txt"))
 (def female-name-map (name-map-from-resource-file "female-names.txt"))
 
@@ -53,22 +46,141 @@
 (defn female-name [] (generate-single-name female-name-map))
 
 
-(defn funny-name-maker []
-  (repeatedly
-   (fn []
-     (let [genname (partial generate-single-name default-nextmap)
-           core-names (clojure.string/join " "
-                              (repeatedly (num-names) genname))
-           ;; Add title (Ms., Dr., ...):
-           with-title (if (choose-whether 5)
-                        (str (prefix) " " core-names)
-                        core-names)
-           ;; Add Jr., III, etc.:
-           with-gen (if (choose-whether 5)
-                      (str with-title " " (generation))
-                      with-title)
-           ;; Add Ph.D., ...:
-           suffixes (set (take-n (rand-int (rand-int 3)) suffixes))]
-       (if (empty? suffixes)
-         with-gen
-         (str with-gen ", " (clojure.string/join ", " suffixes)))))))
+(defn gen-name-data-as-map []
+  (let [gender (gender)
+        first-name (condp = gender
+                     :male (male-name)
+                     :female (female-name)
+                     :other ((rand-nth [male-name female-name])))
+        surnames (repeatedly (dec (num-names))
+                             (partial generate-single-name default-nextmap))]
+    {:gender gender
+     :first-name first-name
+     :prefix (when (choose-whether 3)
+               (rand-nth (condp = gender
+                           :male male-prefixes
+                           :female female-prefixes
+                           :other (concat male-prefixes female-prefixes))))
+     :surnames surnames
+     :generation (when (and (choose-whether 4)
+                            (= gender :male))
+                   (generation))}))
+
+
+(defn format-name-map [{:keys [gender prefix first-name surnames generation]}]
+  (apply str `(~@(if (and prefix
+                          (seq surnames)) [prefix " "])
+               ~first-name
+               ~(if (seq surnames) " " "")
+               ~@(interpose " " surnames)
+               ~@(if (and (seq surnames)
+                          generation) [", " generation]))))
+
+
+(defn name-maker [] (format-name-map (gen-name-data-as-map)))
+
+
+(repeatedly 100 name-maker)
+
+;;=>
+'("Deidra Olas Rafael"
+  "Ms. Rochellye Ryce"
+  "Xuan Amiltos"
+  "Mesha"
+  "Mr. Rain Brian"
+  "Ms. Rnelieselottie Tendra"
+  "Srta. Nora Adrianto"
+  "Larence Holly, Jr."
+  "Ms. Cheryn Ning"
+  "Mr. Nces Line Herbertran"
+  "Ngelyndi Rleen Hnath"
+  "Dford Uane Raja"
+  "Ms. Ursula Anity Todd"
+  "Gilda Rleen Cobson Gabrina"
+  "Herr Chary Acey Trian, V"
+  "Sra. Idre Izumi Jeri"
+  "Seth Rtmanny"
+  "Mr. Ufus Zabeth Leslie Klaus"
+  "Uddy"
+  "Mr. Rtez Mats"
+  "Osphine Xannette"
+  "Mr. Teddy Rray"
+  "Octavio Llen Stian Steen Ergeant"
+  "Ms. Jerilynn Pratap"
+  "Ms. Ronna Lastic"
+  "Hiroko Spencer"
+  "Obias Susanne Pper Xandell Helm"
+  "Mr. Jaime Odent"
+  "Ms. Thew Terrencer Rchie Barton"
+  "Ms. Meraldine Agnar"
+  "Basil"
+  "Ictor Jill Uashi Lainer"
+  "Aude Dirk, Sr."
+  "Dmundo Amiya"
+  "Alorita Bernie"
+  "Sphina Akash"
+  "Ssaunda Pert"
+  "Erisa Doss"
+  "Aude Avery"
+  "Liff Howard"
+  "Rhett Rbra"
+  "Sir Uart Emmett"
+  "Bernie Anny"
+  "Mr. Ospeh Rtis Stefan Rofumi Tonella"
+  "Ifford"
+  "Ms. Hton Timo Fael Rtney"
+  "Bara Rthur"
+  "M. Tney Jonath"
+  "Lien Toshi Reiner Erite Eenu"
+  "Mr. Stewart Suan"
+  "Mr. Sreal Anao Torsten, Jr."
+  "Edmund Rick"
+  "Mr. Irley Anjeev"
+  "Yden Eymour Nifer Njit Nnie, Sr."
+  "Tlyn Nold Orah"
+  "Ladonna Curtis"
+  "Racelyn Tovah Lyndon"
+  "Mrs. Rlys Ndell Xana Russell"
+  "Ms. Renna Ufic"
+  "Orrison Soohong, I"
+  "Liott Urel, Jr."
+  "Sra. Lessika Armi"
+  "Sir Anford Huey Skef Hartmann Usty"
+  "Ms. Evetta Iane"
+  "Arell Rlos Caleb Exanderson"
+  "Ms. Rren Arney"
+  "Rgot Hienz"
+  "Levia"
+  "Coreena Icholas"
+  "Herr Omeo Riggs, Sr."
+  "Miss Oras Eggy Toby"
+  "Aila"
+  "Amisha"
+  "Wonda Danni"
+  "Miss Rilou Idhyanatoly Chuck"
+  "Arta Raja"
+  "Herr Lair Olkka"
+  "Mr. Rady Rtha"
+  "Kary Foklis Ofia Aleb"
+  "Mr. Iego Cisco"
+  "Lincoln Ario Orrainer, Jr."
+  "Lake Main, Jr."
+  "Numbery"
+  "Aniqua Hsin"
+  "Orileen Errancois"
+  "Rray Ouiqa"
+  "Ms. Mackenzie Tofer Oshua"
+  "Jasonya Etry"
+  "Mora Aryl Raif"
+  "Sr. Obias Kerry, V"
+  "Lane Dwight Rouk"
+  "Mr. Noah Alter Giovanni"
+  "Ms. Rucila Clyde"
+  "Srta. Ulinetta Alastair"
+  "Grice Erdar"
+  "Arrell Oyuki, Jr."
+  "Milton Farouk, II"
+  "Vory Cris"
+  "Lynisha"
+  "Herr Dylan Ewis")
+

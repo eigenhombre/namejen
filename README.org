@@ -1,0 +1,116 @@
+#+TITLE: namejen
+#+OPTIONS: toc:nil
+
+Random name generator, written in Clojure, that uses Markov chains to
+follow common syllabic patterns.  Inspired by [[http://roguebasin.roguelikedevelopment.org/index.php/Markov_chains_name_generator_in_Python][this Python project]].
+
+When run standalone, the output is a column of names suitable for
+games, writing fiction, naming your pets and kids, etc.  Your mileage
+may vary.
+
+Substituting a different list of source names (see files in =resources=)
+will change the flavor of the names, sometimes dramatically.  For the
+input provided, the output seems reminiscent of names from an
+[[http://en.wikipedia.org/wiki/Iain_Banks][Iain M. Banks novel]].
+
+* Examples
+
+#+BEGIN_EXAMPLE
+Deidra Olas Rafael
+Ms. Rochellye Ryce
+Xuan Amiltos
+Mesha
+Mr. Rain Brian
+Ms. Rnelieselottie Tendra
+Srta. Nora Adrianto
+Larence Holly, Jr.
+Ms. Cheryn Ning
+Mr. Nces Line Herbertran
+Ngelyndi Rleen Hnath
+Dford Uane Raja
+Ms. Ursula Anity Todd
+Gilda Rleen Cobson Gabrina
+Herr Chary Acey Trian, V
+Sra. Idre Izumi Jeri
+Mr. Ufus Zabeth Leslie Klaus
+Octavio Llen Stian Steen Ergeant
+Ms. Jerilynn Pratap
+Ms. Ronna Lastic
+Hiroko Spencer
+Obias Susanne Pper Xandell Helm
+Mr. Jaime Odent
+Ms. Thew Terrencer Rchie Barton
+Ms. Meraldine Agnar
+Basil
+Ictor Jill Uashi Lainer
+Aude Dirk, Sr.
+Alorita Bernie
+Sphina Akash
+Erisa Doss
+Aude Avery
+Rhett Rbra
+Sir Uart Emmett
+Bernie Anny
+Mr. Ospeh Rtis Stefan Rofumi Tonella
+Lincoln Ario Orrainer, Jr.
+Lake Main, Jr.
+Aniqua Hsin
+Ms. Mackenzie Tofer Oshua
+Jasonya Etry
+Mora Aryl Raif
+Sr. Obias Kerry, V
+Lane Dwight Rouk
+Mr. Noah Alter Giovanni
+Ms. Rucila Clyde
+Srta. Ulinetta Alastair
+Grice Erdar
+Arrell Oyuki, Jr.
+Milton Farouk, II
+Herr Dylan Ewis
+
+#+END_EXAMPLE
+
+* Usage
+
+** As a standalone program
+
+#+BEGIN_EXAMPLE
+   lein run
+   # or build überjar and run resulting jar file.
+#+END_EXAMPLE
+
+** As a library
+
+To use the relevant functions, add the following to your project.clj:
+
+[[http://clojars.org/eigenhombre/namejen/latest-version.svg]]
+
+The functions of interest are in the =namejen.names= namespace:
+
+- =gen-name-data-as-map= generates gender, first name,
+  honorific/prefix, surname(s), and generation info (Jr., III, etc.).
+- =format-name-map= formats the output of the previous function into
+  something readable.
+- The =name-maker= function is the composition of the two functions,
+  for convenience.
+
+** TO DO list:
+- Allow users to specify source of names
+- Allow users to specify Markov chain lengths. The longer the Markov
+  chain length, the more the names will sound like "real" names but
+  the less variations you will get.
+
+* License
+
+Copyright (C) 2012-2015 John Jacobsen.
+
+Distributed under the Eclipse Public License, the same as Clojure.
+
+THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT
+OF THIRD PARTY RIGHTS. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR
+IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
