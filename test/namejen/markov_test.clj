@@ -2,9 +2,9 @@
   (:require [midje.sweet :refer :all]
             [namejen.markov :refer [generate-single-name
                                     make-nextmap
-                                    get-name-data
                                     build-map-from-strings
-                                    build-map-from-seqs]]))
+                                    build-map-from-seqs]]
+            [namejen.io :refer [get-name-data]]))
 
 
 (facts "I can generate a name with the basic name maker"

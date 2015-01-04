@@ -1,4 +1,5 @@
-(ns namejen.markov)
+(ns namejen.markov
+  (:require [namejen.io :refer [get-name-data]]))
 
 
 (defn add-to-chain [chainlen chainmap chain]
@@ -34,13 +35,6 @@
   (->> strings
        (map clojure.string/lower-case)
        (build-map-from-seqs chainlen)))
-
-
-(defn get-name-data [f]
-  (->> f
-       clojure.java.io/resource
-       slurp
-       clojure.string/split-lines))
 
 
 (defn generate-sequence

@@ -1,7 +1,7 @@
 (ns namejen.companies
   (:require [namejen.markov :refer [generate-single-name
-                                    get-name-data
-                                    build-map-from-strings]]))
+                                    build-map-from-strings]]
+            [namejen.io :refer [get-name-data]]))
 
 
 (def ^:private company-data-map
