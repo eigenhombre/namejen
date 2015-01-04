@@ -67,7 +67,7 @@ Herr Dylan Ewis
 
 To use the relevant functions, add the following to your project.clj:
 
-[[http://clojars.org/eigenhombre/namejen/latest-version.svg]]
+[[http://clojars.org/eigenhombre/namejen][http://clojars.org/eigenhombre/namejen/latest-version.svg]]
 
 The functions of interest are in the =namejen.names= namespace:
 
