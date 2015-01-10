@@ -52,8 +52,10 @@
                      :male (male-name)
                      :female (female-name)
                      :other ((rand-nth [male-name female-name])))
-        surnames (repeatedly (dec (num-names))
-                             (partial generate-single-name default-nextmap))]
+        surnames (->> default-nextmap
+                      (partial generate-single-name)
+                      (repeatedly (dec (num-names)))
+                      vec)]
     {:gender gender
      :first-name first-name
      :prefix (when (choose-whether 3)
