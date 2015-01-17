@@ -44,6 +44,7 @@
 
 (defn male-name [] (generate-single-name male-name-map))
 (defn female-name [] (generate-single-name female-name-map))
+(defn generic-name [] (generate-single-name default-nextmap))
 
 
 (defn gen-name-data-as-map []
