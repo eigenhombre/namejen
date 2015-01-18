@@ -4,7 +4,7 @@
 [[https://travis-ci.org/eigenhombre/namejen][https://travis-ci.org/eigenhombre/namejen.svg]]
 
 Random name generator, written in Clojure, that uses Markov chains to
-follow common syllabic patterns.  Inspired by [[http://roguebasin.roguelikedevelopment.org/index.php/Markov_chains_name_generator_in_Python][this Python project]].
+follow common syllabic patterns.  Inspired by [[http://www.roguebasin.com/index.php?title=Markov_chains_name_generator_in_Python][this Python project]].
 
 When run standalone, the output is a column of names suitable for
 games, writing fiction, naming your pets and kids, etc.  Your mileage
