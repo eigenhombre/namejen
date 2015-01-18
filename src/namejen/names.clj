@@ -31,10 +31,23 @@
                                      [1 3 3 4 5])))
 
 
+(defn name-map-from-multi-files [files]
+  (->> files
+       (mapcat get-name-data)
+       (build-map-from-strings 4)))
+
+
 (defn name-map-from-resource-file [fname]
   (->> fname
        get-name-data
        (build-map-from-strings 4)))
+
+
+(def all-nextmap (name-map-from-multi-files
+                  ["names.txt"
+                   "male-names.txt"
+                   "female-names.txt"
+                   "companies.txt"]))
 
 
 (def default-nextmap (name-map-from-resource-file "names.txt"))
@@ -44,7 +57,7 @@
 
 (defn male-name [] (generate-single-name male-name-map))
 (defn female-name [] (generate-single-name female-name-map))
-(defn generic-name [] (generate-single-name default-nextmap))
+(defn generic-name [] (generate-single-name all-nextmap))
 
 
 (defn gen-name-data-as-map []
