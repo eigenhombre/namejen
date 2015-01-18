@@ -1,6 +1,8 @@
 #+TITLE: namejen
 #+OPTIONS: toc:nil
 
+[[https://travis-ci.org/eigenhombre/namejen.svg]]
+
 Random name generator, written in Clojure, that uses Markov chains to
 follow common syllabic patterns.  Inspired by [[http://roguebasin.roguelikedevelopment.org/index.php/Markov_chains_name_generator_in_Python][this Python project]].
 
