@@ -8,6 +8,6 @@
   :aliases {"autotest" ["midje" ":autotest"]}
   :description "A Markov-chain-based name generator for games, fiction, &c."
   :deploy-repositories [["releases" :clojars]]
-  :profiles {:dev {:dependencies [[midje "1.6.3"]]}
-             :plugins [[lein-midje "3.1.3"]]
+  :profiles {:dev {:dependencies [[midje "1.6.3"]]
+                   :plugins [[lein-midje "3.1.3"]]}
              :uberjar {:aot :all}})
