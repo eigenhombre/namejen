@@ -1,4 +1,4 @@
-(defproject eigenhombre/namejen "0.1.10"
+(defproject eigenhombre/namejen "0.1.11"
   :dependencies [[org.clojure/clojure "1.6.0"]]
   :url "https://github.com/eigenhombre/namejen"
   :resource-paths ["resources"]
@@ -10,4 +10,6 @@
   :deploy-repositories [["releases" :clojars]]
   :profiles {:dev {:dependencies [[midje "1.6.3"]]
                    :plugins [[lein-midje "3.1.3"]]}
-             :uberjar {:aot :all}})
+             :uberjar {:aot :all}}
+  :scm {:name "git"
+        :url "https://github.com/eigenhombre/namejen"})
