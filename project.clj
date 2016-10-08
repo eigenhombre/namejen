@@ -1,5 +1,5 @@
 (defproject eigenhombre/namejen "0.1.12"
-  :dependencies [[org.clojure/clojure "1.6.0"]]
+  :dependencies [[org.clojure/clojure "1.8.0"]]
   :url "https://github.com/eigenhombre/namejen"
   :resource-paths ["resources"]
   :license {:name "Eclipse Public License"
