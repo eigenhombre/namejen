@@ -6,7 +6,7 @@
   (let [key (take chainlen chain)
         nxt (nth chain chainlen)
         lookup (chainmap key)
-        curvec (if lookup lookup #{})]
+        curvec (or lookup #{})]
     (assoc chainmap key (conj curvec nxt))))
 
 
@@ -24,11 +24,12 @@
 
 
 (defn build-map-from-seqs [chainlen input-sequences]
-  (make-nextmap chainlen (->> input-sequences
-                              (map vec)
-                              (map #(conj % 'STOP-STATE))
-                              (map #(partition (inc chainlen) 1 %))
-                              (apply concat))))
+  (->> input-sequences
+       (map vec)
+       (map #(conj % 'STOP-STATE))
+       (map #(partition (inc chainlen) 1 %))
+       (apply concat)
+       (make-nextmap chainlen)))
 
 
 (defn build-map-from-strings [chainlen strings]
@@ -39,22 +40,26 @@
 
 (defn generate-sequence
   "
-  Generate a sequence using Markov chain by following choices captured in
-  'nextmap'.  Start with an initial sequence/key randomly chosen from
-  the keys in the map.  Select next letter randomly based on the
+  Generate a sequence using Markov chain by following choices captured
+  in 'nextmap'.  Start with an initial sequence/key randomly chosen
+  from the keys in the map.  Select next letter randomly based on the
   available ones for that key.  Collect all letters this way, adding
-  them and changing the current key until STOP-STATE symbol is reached.
+  them and changing the current key until STOP-STATE symbol is
+  reached, or there are no available choices for the current position
+  in the chain.
   "
   [nextmap]
   (loop [current (rand-nth (keys nextmap))
          all current
-         next (rand-nth (vec (nextmap current)))]
-    (if (= next 'STOP-STATE)
-      all
-      (let [next-current (concat (rest current) [next])
-            next-all (concat all [next])
-            next-next (rand-nth (vec (nextmap next-current)))]
-        (recur next-current next-all next-next)))))
+         current-value (rand-nth (vec (nextmap current)))]
+    (when current-value
+      (if (= current-value 'STOP-STATE)
+        all
+        (let [next-current (concat (rest current) [current-value])
+              next-all (concat all [current-value])
+              nextvals (vec (nextmap next-current))]
+          (when (seq nextvals)
+            (recur next-current next-all (rand-nth nextvals))))))))
 
 
 (defn generate-single-name
