@@ -51,7 +51,7 @@
          (map string-tokens)))
 
 
-  ;;(take 3 (sentences))
+  (take 3 (sentences))
   ;;=>
   '(("in" "the" "shade" "of" "the" "house," "in" "the" "sunshine" "of"
      "the" "riverbank" "near" "the" "boats," "in" "the" "shade" "of" "the"
@@ -78,11 +78,16 @@
     (->> (sentences)
          (build-map-from-seqs 3)))
 
-
+  (count (sentence-map))
+  ;;=>
+  34924
 
   ;; Generate sentences map:
-  (let [m (sentence-map)]
-    (spit "/tmp/sentences.edn" (pr-str m))))
+  (->> (sentence-map)
+       (into {})
+       pr-str
+       (spit "/tmp/sentences.edn"))
+  )
 
 
 ;; Read cached Markov chain map for sentences:
@@ -91,7 +96,9 @@
 
 
 (comment
-  (repeatedly 10 #(generate-sentence (sentence-map)))
+
+  (let [m (sentence-map)]
+    (repeatedly 10 #(generate-sentence m)))
   ;;=>
   ("Books, only because he had believed in me and now believes in him,
    who had been shivering with grief since those ranting speeches, the
