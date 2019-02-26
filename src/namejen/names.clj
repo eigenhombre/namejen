@@ -47,18 +47,20 @@
                   ["names.txt"
                    "male-names.txt"
                    "female-names.txt"
-                   "companies.txt"]))
+                   ;; Adapted from
+                   ;; https://www.math.ubc.ca/~cass/frivs/latin/latin-dict-full.html:
+                   "latin-words.txt"]))
 
 
 (def default-nextmap (name-map-from-resource-file "names.txt"))
 (def male-name-map (name-map-from-resource-file "male-names.txt"))
 (def female-name-map (name-map-from-resource-file "female-names.txt"))
-
+(def latin-name-map (name-map-from-resource-file "latin-words.txt"))
 
 (defn male-name [] (generate-single-name male-name-map))
 (defn female-name [] (generate-single-name female-name-map))
 (defn generic-name [] (generate-single-name all-nextmap))
-
+(defn latinish-name [] (generate-single-name latin-name-map))
 
 (defn gen-name-data-as-map []
   (let [gender (gender)
