@@ -22,6 +22,8 @@
              :uberjar {:aot :all}}
   :scm {:name "git"
         :url "https://github.com/eigenhombre/namejen"}
+  :repositories [["releases" {:url "https://repo.clojars.org"
+                              :creds :gpg}]]
   :release-tasks [["vcs" "assert-committed"]
                   ["change" "version"
                    "leiningen.release/bump-version"
