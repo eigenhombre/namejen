@@ -97,7 +97,6 @@
 
 (defn name-maker [] (format-name-map (gen-name-data-as-map)))
 
-
 (repeatedly 100 name-maker)
 
 ;;=>
