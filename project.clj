@@ -1,4 +1,4 @@
-(defproject eigenhombre/namejen "0.1.17"
+(defproject eigenhombre/namejen "0.1.18-SNAPSHOT"
   :dependencies [[org.clojure/clojure "1.10.3"]]
   :url "https://github.com/eigenhombre/namejen"
   :resource-paths ["resources"]
