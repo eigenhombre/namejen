@@ -2,6 +2,8 @@
 
 <img src="/quoque.jpg" width="400">
 
+![build](https://github.com/eigenhombre/namejen/actions/workflows/build.yml/badge.svg)
+
 Random name generator, written in Clojure, that uses Markov chains to
 follow common syllabic patterns.  Inspired by [this Python project](http://www.roguebasin.com/index.php?title=Markov_chains_name_generator_in_Python).
 
