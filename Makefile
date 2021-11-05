@@ -1,4 +1,4 @@
-.PHONY: all test
+.PHONY: all test docker
 
 all: test uberjar
 
@@ -9,3 +9,6 @@ test:
 	lein test
 
 uberjar: target/uberjar/namejen.jar
+
+docker:
+	docker build --progress tty -t namejen .

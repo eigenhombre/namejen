@@ -16,4 +16,4 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
       - name: build
-        run: make
+        run: make docker
