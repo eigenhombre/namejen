@@ -29,7 +29,7 @@
                   ["file-replace" "README.md"
                    "\\[eigenhombre/namejen \"" "\"]"
                    "version"]
-                  ;; ["vcs" "commit"]
+                  ["vcs" "commit"]
                   ;; ["vcs" "tag" "v" "--no-sign"]
                   ;; ["deploy"]
                   ;; ["change" "version" "leiningen.release/bump-version"]
