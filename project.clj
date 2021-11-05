@@ -10,7 +10,10 @@
   :uberjar-name "namejen.jar"
   :target-path "target/%s"
   :aliases {"kaocha" ["with-profile" "+kaocha" "run" "-m" "kaocha.runner"]}
-  :profiles {:dev {:dependencies []}
+  :profiles {:dev {:dependencies []
+                   :plugins [[lein-bikeshed "0.5.2"]
+                             [jonase/eastwood "0.9.9"]
+                             [lein-kibit "0.1.8"]]}
              :kaocha {:dependencies [[lambdaisland/kaocha "1.0.887"]]}
              :uberjar {:aot :all}}
   :scm {:name "git"

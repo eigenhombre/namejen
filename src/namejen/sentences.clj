@@ -1,30 +1,28 @@
 (ns namejen.sentences
-  (:require [namejen.markov :refer [build-map-from-seqs
+  (:require [clojure.java.io :as io]
+            [clojure.string :as string]
+            [namejen.markov :refer [build-map-from-seqs
                                     generate-sequence]]))
-
 
 (defn string-tokens
   "
   Split string on whitespace and remove extraneous empty strings.
   "
   [s] (->> s
-           (#(clojure.string/split % #" "))
+           (#(string/split % #" "))
            (remove #{""})))
-
 
 (defn generate-sentence
   "
   Generate sample sentence from the given map.
   "
   [smap]
-  (->> smap
-       (generate-sequence)
-       ((fn [[h & t]]
-          (cons (clojure.string/capitalize h)
-                t)))
-       ((partial clojure.string/join " "))
-       (#(str % "."))))
-
+  (as-> smap |
+    (generate-sequence |)
+    (vec |)
+    (update-in | [0] string/capitalize)
+    (string/join " " |)
+    (str | ".")))
 
 (comment
   ;; Get text from Project Gutenberg.
@@ -34,7 +32,6 @@
       s
       (reset! siddhartha
               (slurp "https://www.gutenberg.org/cache/epub/2500/pg2500.txt"))))
-
 
   (defn sentences
     "
@@ -46,10 +43,9 @@
          (remove #{\return \"})
          (map (fn [c] (if (= c \newline) \space c)))
          (apply str)
-         (#(clojure.string/split % #"\."))
-         (map clojure.string/lower-case)
+         (#(string/split % #"\."))
+         (map string/lower-case)
          (map string-tokens)))
-
 
   (take 3 (sentences))
   ;;=>
@@ -69,14 +65,12 @@
      "when" "his" "father," "the" "scholar," "taught" "him," "when" "the"
      "wise" "men" "talked"))
 
-
   (defn sentence-map
     "
   Build Markov transition map of possible sentences.
   "
     []
-    (->> (sentences)
-         (build-map-from-seqs 3)))
+    (build-map-from-seqs 3 (sentences)))
 
   (count (sentence-map))
   ;;=>
@@ -86,17 +80,13 @@
   (->> (sentence-map)
        (into {})
        pr-str
-       (spit "/tmp/sentences.edn"))
-  )
-
+       (spit "/tmp/sentences.edn")))
 
 ;; Read cached Markov chain map for sentences:
 (defn sentence-map []
-  (read-string (slurp (clojure.java.io/resource "sentences.edn"))))
-
+  (read-string (slurp (io/resource "sentences.edn"))))
 
 (comment
-
   (let [m (sentence-map)]
     (repeatedly 10 #(generate-sentence m)))
   ;;=>

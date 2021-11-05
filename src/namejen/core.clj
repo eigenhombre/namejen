@@ -1,5 +1,6 @@
 (ns namejen.core
-  (:require [namejen.names :refer [name-maker]])
+  (:require [clojure.string :as string]
+            [namejen.names :refer [name-maker]])
   (:gen-class))
 
 (defn -main [& [nstr & _]]
@@ -7,5 +8,5 @@
     (->> name-maker
          repeatedly
          (take n)
-         (clojure.string/join "\n")
+         (string/join "\n")
          println)))

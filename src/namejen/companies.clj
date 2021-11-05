@@ -1,32 +1,31 @@
 (ns namejen.companies
-  (:require [namejen.markov :refer [generate-single-name
-                                    build-map-from-strings]]
-            [namejen.io :refer [get-name-data]]))
-
+  (:require [clojure.string :as string]
+            [namejen.io :refer [get-name-data]]
+            [namejen.markov :refer [generate-single-name
+                                    build-map-from-strings]]))
 
 (def ^:private company-data-map
   (->> "companies.txt"
        get-name-data
        (build-map-from-strings 4)))
 
+(defn num-company-names []
+  (rand-nth [1 1 1 2 2 3 4]))
 
-(defn num-company-names [] (rand-nth [1 1 1 2 2 3 4]))
+(defn corptype []
+  (rand-nth ["LLC"
+             "Incorporated"
+             "Inc."
+             "Incorporated"
+             "Inc."
+             "SA"
+             "AG"]))
 
+(defn domain []
+  (rand-nth ["com" "com" "com" "net" "us" "info" "tv" "biz"]))
 
-(defn corptype [] (rand-nth ["LLC"
-                             "Incorporated"
-                             "Inc."
-                             "Incorporated"
-                             "Inc."
-                             "SA"
-                             "AG"]))
-
-
-(defn domain [] (rand-nth ["com" "com" "com" "net" "us" "info" "tv" "biz"]))
-
-
-(defn remove-hyphens [s] (apply str (remove #{\' \&} s)))
-
+(defn remove-hyphens [s]
+  (string/join (remove #{\' \&} s)))
 
 (defn gen-company-name-and-website []
   (let [num-names (num-company-names)
@@ -47,10 +46,8 @@
                      (domain))]
     [compname website]))
 
-
 (comment
   (repeatedly 20 gen-company-name-and-website)
-
   ;;=>
   (["Tolive" "tolive.com"]
    ["Phone Mnicor" "phone.mnicor.com"]
@@ -72,7 +69,4 @@
    ["Onati Lcase Uintiles, SA" "onatilcaseuintiles.us"]
    ["Olidated Maytag Nova, Inc." "olidatedmaytagnova.com"]
    ["Adio Evrontex Almolive, AG" "adioevrontexalmolive.com"]
-   ["Ana-packaging, Incorporated" "ana-packaging.com"])
-
-
-  )
+   ["Ana-packaging, Incorporated" "ana-packaging.com"]))

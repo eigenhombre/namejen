@@ -1,6 +1,6 @@
 (ns namejen.markov
-  (:require [namejen.io :refer [get-name-data]]))
-
+  (:require [clojure.string :as string]
+            [namejen.io :refer [get-name-data]]))
 
 (defn add-to-chain [chainlen chainmap chain]
   (let [key (take chainlen chain)
@@ -8,7 +8,6 @@
         lookup (chainmap key)
         curvec (or lookup #{})]
     (assoc chainmap key (conj curvec nxt))))
-
 
 (defn make-nextmap
   "
@@ -22,7 +21,6 @@
   [chainlen parts]
   (reduce (partial add-to-chain chainlen) {} parts))
 
-
 (defn build-map-from-seqs [chainlen input-sequences]
   (->> input-sequences
        (map vec)
@@ -31,12 +29,10 @@
        (apply concat)
        (make-nextmap chainlen)))
 
-
 (defn build-map-from-strings [chainlen strings]
   (->> strings
-       (map clojure.string/lower-case)
+       (map string/lower-case)
        (build-map-from-seqs chainlen)))
-
 
 (defn generate-sequence
   "
@@ -61,7 +57,6 @@
           (when (seq nextvals)
             (recur next-current next-all (rand-nth nextvals))))))))
 
-
 (defn generate-single-name
   "
   For a sequence of letters, captialize and return as string.
@@ -69,4 +64,4 @@
   [nextmap]
   (->> (generate-sequence nextmap)
        (apply str)
-       clojure.string/capitalize))
+       string/capitalize))

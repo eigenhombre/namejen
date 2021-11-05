@@ -1,8 +1,9 @@
-(ns namejen.io)
-
+(ns namejen.io
+  (:require [clojure.java.io :as io]
+            [clojure.string :as string]))
 
 (defn get-name-data [f]
   (->> f
-       clojure.java.io/resource
+       io/resource
        slurp
-       clojure.string/split-lines))
+       string/split-lines))

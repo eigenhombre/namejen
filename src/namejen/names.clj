@@ -1,7 +1,8 @@
 (ns namejen.names
-  (:require [namejen.markov :refer [generate-single-name
-                                    build-map-from-strings]]
-            [namejen.io :refer [get-name-data]]))
+  (:require [clojure.string :as string]
+            [namejen.io :refer [get-name-data]]
+            [namejen.markov :refer [generate-single-name
+                                    build-map-from-strings]]))
 
 (defn gender [] (->> [:male :female]
                      (repeat 20)
@@ -16,10 +17,12 @@
                              ["Miss" "Mrs." "Sra." "Srta." "Fr."]))
 
 ;; FIXME: Male-heavy.  Female equivalents?
-(defn generation [] (rand-nth ["Sr." "Jr." "Jr."
-                               "I" "II" "III" "III" "IV" "V"]))
+(defn generation []
+  (rand-nth ["Sr." "Jr." "Jr."
+             "I" "II" "III" "III" "IV" "V"]))
 
-(defn choose-whether [n] (= (rand-int n) 0))
+(defn choose-whether [n]
+  (zero? (rand-int n)))
 
 (defn num-names [] (rand-nth (concat (repeat 5 2)
                                      [1 3 3 4 5])))
@@ -74,13 +77,13 @@
                    (generation))}))
 
 (defn format-name-map [{:keys [gender prefix first-name surnames generation]}]
-  (apply str `(~@(if (and prefix
-                          (seq surnames)) [prefix " "])
-               ~first-name
-               ~(if (seq surnames) " " "")
-               ~@(interpose " " surnames)
-               ~@(if (and (seq surnames)
-                          generation) [", " generation]))))
+  (string/join `(~@(if (and prefix
+                            (seq surnames)) [prefix " "])
+                 ~first-name
+                 ~(if (seq surnames) " " "")
+                 ~@(interpose " " surnames)
+                 ~@(if (and (seq surnames)
+                            generation) [", " generation]))))
 
 (defn name-maker []
   (format-name-map (gen-name-data-as-map)))
