@@ -63,7 +63,11 @@ input provided, the output seems reminiscent of names from an
 
 ### As a library
 
-Add `eigenhombre/namejen "0.1.14"` to your `project.clj` or `deps.edn`.
+Addto your `project.clj` or `deps.edn`:
+
+```
+    [eigenhombre/namejen "0.1.14"]
+```
 
 The functions of interest are in the `namejen.names` namespace:
 
