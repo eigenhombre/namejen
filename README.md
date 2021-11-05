@@ -66,7 +66,7 @@ input provided, the output seems reminiscent of names from an
 Addto your `project.clj` or `deps.edn`:
 
 ```
-    [eigenhombre/namejen "0.1.18"]
+    [eigenhombre/namejen "0.1.19"]
 ```
 
 The functions of interest are in the `namejen.names` namespace:
