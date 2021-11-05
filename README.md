@@ -56,8 +56,8 @@ input provided, the output seems reminiscent of names from an
 
 ### As a standalone program
 
-    lein run
-    # or build überjar and run resulting jar file.
+    make                                  # once
+    java -jar target/uberjar/namejen.jar  # every time
 
 ### As a library
 
