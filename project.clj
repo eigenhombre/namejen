@@ -1,4 +1,4 @@
-(defproject eigenhombre/namejen "0.1.15-SNAPSHOT"
+(defproject eigenhombre/namejen "0.1.15"
   :dependencies [[org.clojure/clojure "1.10.3"]]
   :url "https://github.com/eigenhombre/namejen"
   :resource-paths ["resources"]
@@ -26,9 +26,9 @@
                   ["change" "version"
                    "leiningen.release/bump-version"
                    "release"]
-                  ;; ["file-replace" "README.md"
-                  ;;  "\\[eigenhombre/namejen \"" "\"]"
-                  ;;  "version"]
+                  ["file-replace" "README.md"
+                   "\\[eigenhombre/namejen \"" "\"]"
+                   "version"]
                   ;; ["vcs" "commit"]
                   ;; ["vcs" "tag" "v" "--no-sign"]
                   ;; ["deploy"]
