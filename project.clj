@@ -23,9 +23,9 @@
   :scm {:name "git"
         :url "https://github.com/eigenhombre/namejen"}
   :release-tasks [["vcs" "assert-committed"]
-                  ;; ["change" "version"
-                  ;;  "leiningen.release/bump-version"
-                  ;;  "release"]
+                  ["change" "version"
+                   "leiningen.release/bump-version"
+                   "release"]
                   ;; ["file-replace" "README.md"
                   ;;  "\\[eigenhombre/namejen \"" "\"]"
                   ;;  "version"]
