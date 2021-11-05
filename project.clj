@@ -10,8 +10,7 @@
   :main ^:skip-aot namejen.core
   :uberjar-name "namejen.jar"
   :target-path "target/%s"
-  :profiles {:dev {:dependencies [[midje "1.6.3"]]
-                   :plugins [[lein-midje "3.1.3"]]}
+  :profiles {:dev {:dependencies [[midje "1.10.5"]]}
              :uberjar {:aot :all}}
   :scm {:name "git"
         :url "https://github.com/eigenhombre/namejen"})
