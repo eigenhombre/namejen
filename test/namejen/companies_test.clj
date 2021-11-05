@@ -1,10 +1,12 @@
 (ns namejen.companies-test
-  (:require [namejen.companies :refer :all]
-            [midje.sweet :refer :all]))
+  (:require [clojure.test :refer [deftest testing is]]
+            [namejen.companies :refer [gen-company-name-and-website]]))
 
-
-(fact "Smoke test for company generation"
-  (->> gen-company-name-and-website
-       (repeatedly 20)
-       (apply concat)
-       count) => 40)
+(deftest companies-test
+  (testing "company generation"
+    (dotimes [_ 100]
+      (let [[compname website] (gen-company-name-and-website)]
+        (testing "Name is nonempty"
+          (is (seq compname)))
+        (testing "Website ends in .xy, .xyz, .pdqr, ..."
+          (is (re-find #"[^\.]+\.[^\.]{2,4}$" website)))))))

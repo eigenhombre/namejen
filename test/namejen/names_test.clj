@@ -1,8 +1,8 @@
 (ns namejen.names-test
-  (:require [midje.sweet :refer :all]
+  (:require [clojure.test :refer [deftest testing is]]
             [namejen.names :refer [name-maker]]))
 
-
-(facts "default / main function makes a bunch of values"
-  (let [nom (name-maker)]
-    (> (count nom) 0) => true))
+(deftest name-maker-test
+  (testing "default / main function makes a bunch of values"
+    (is (every? (comp (complement zero?) count)
+                (repeatedly 100 name-maker)))))
