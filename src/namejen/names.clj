@@ -1,5 +1,6 @@
 (ns namejen.names
-  (:require [clojure.string :as string]
+  (:require [clojure.pprint :refer [cl-format]]
+            [clojure.string :as string]
             [namejen.io :refer [resource-file-lines]]
             [namejen.markov :refer [generate-single-name
                                     build-map-from-strings]]))
@@ -53,13 +54,73 @@
 (def ^:private female-name-map (name-map-from-resource-file "female-names.txt"))
 (def ^:private latin-name-map (name-map-from-resource-file "latin-words.txt"))
 
+(defn male-name
+  "
+  Examples:
 
-(defn male-name [] (generate-single-name male-name-map))
-(defn female-name [] (generate-single-name female-name-map))
-(defn generic-name [] (generate-single-name all-nextmap))
-(defn latinish-name [] (generate-single-name latin-name-map))
+      (repeatedly 5 male-name)
+      ;;=>
+      (\"Daren\" \"Istian\" \"Amion\" \"Lonnie\" \"Ichary\")
 
-(defn gen-name-data-as-map []
+  "
+  {:doc/format :markdown}
+  []
+  (generate-single-name male-name-map))
+
+(defn female-name
+  "
+  Examples:
+
+      (repeatedly 5 female-name)
+      ;;=>
+      (\"Kaela\" \"Erdie\" \"Ethyl\" \"Elnora\" \"Genny\")
+
+  "
+  {:doc/format :markdown}
+  []
+  (generate-single-name female-name-map))
+
+(defn generic-name
+  "
+  Examples:
+
+      (repeatedly 5 generic-name)
+      ;;=>
+      (\"Lutabrus\" \"Pono\" \"Ognosco\" \"Elta\" \"Ngus\")
+
+  "
+  {:doc/format :markdown}
+  []
+  (generate-single-name all-nextmap))
+
+(defn latinish-name
+  "
+  Examples:
+
+      (repeatedly 5 latinish-name)
+      ;;=>
+      (\"Psio\" \"Ongruus\" \"Agri\" \"Itacitero\" \"Aedo\")
+
+  "
+  {:doc/format :markdown}
+  []
+  (generate-single-name latin-name-map))
+
+(defn gen-name-data-as-map
+  "
+  Example:
+
+      (gen-name-data-as-map)
+      ;;=>
+      {:gender :female
+       :first-name \"Luette\"
+       :prefix nil
+       :surnames [\"Adlai\" \"Angela\" \"Stlik\"]
+       :generation nil}
+
+  "
+  {:doc/format :markdown}
+  []
   (let [gender (gender)
         first-name (condp = gender
                      :male (male-name)
@@ -90,109 +151,21 @@
                  ~@(if (and (seq surnames)
                             generation) [", " generation]))))
 
-(defn name-maker []
+(defn name-maker
+  "
+      (repeatedly 10 name-maker)
+      ;;=>
+      '(\"Deidra Olas Rafael\"
+        \"Ms. Rochellye Ryce\"
+        \"Xuan Amiltos\"
+        \"Mesha\"
+        \"Mr. Rain Brian\"
+        \"Ms. Rnelieselottie Tendra\"
+        \"Srta. Nora Adrianto\"
+        \"Larence Holly, Jr.\"
+        \"Ms. Cheryn Ning\"
+        \"Mr. Nces Line Herbertran\")
+  "
+  {:doc/format :markdown}
+  []
   (format-name-map (gen-name-data-as-map)))
-
-(comment
-  (repeatedly 100 name-maker)
-  ;;=>
-  '("Deidra Olas Rafael"
-    "Ms. Rochellye Ryce"
-    "Xuan Amiltos"
-    "Mesha"
-    "Mr. Rain Brian"
-    "Ms. Rnelieselottie Tendra"
-    "Srta. Nora Adrianto"
-    "Larence Holly, Jr."
-    "Ms. Cheryn Ning"
-    "Mr. Nces Line Herbertran"
-    "Ngelyndi Rleen Hnath"
-    "Dford Uane Raja"
-    "Ms. Ursula Anity Todd"
-    "Gilda Rleen Cobson Gabrina"
-    "Herr Chary Acey Trian, V"
-    "Sra. Idre Izumi Jeri"
-    "Seth Rtmanny"
-    "Mr. Ufus Zabeth Leslie Klaus"
-    "Uddy"
-    "Mr. Rtez Mats"
-    "Osphine Xannette"
-    "Mr. Teddy Rray"
-    "Octavio Llen Stian Steen Ergeant"
-    "Ms. Jerilynn Pratap"
-    "Ms. Ronna Lastic"
-    "Hiroko Spencer"
-    "Obias Susanne Pper Xandell Helm"
-    "Mr. Jaime Odent"
-    "Ms. Thew Terrencer Rchie Barton"
-    "Ms. Meraldine Agnar"
-    "Basil"
-    "Ictor Jill Uashi Lainer"
-    "Aude Dirk, Sr."
-    "Dmundo Amiya"
-    "Alorita Bernie"
-    "Sphina Akash"
-    "Ssaunda Pert"
-    "Erisa Doss"
-    "Aude Avery"
-    "Liff Howard"
-    "Rhett Rbra"
-    "Sir Uart Emmett"
-    "Bernie Anny"
-    "Mr. Ospeh Rtis Stefan Rofumi Tonella"
-    "Ifford"
-    "Ms. Hton Timo Fael Rtney"
-    "Bara Rthur"
-    "M. Tney Jonath"
-    "Lien Toshi Reiner Erite Eenu"
-    "Mr. Stewart Suan"
-    "Mr. Sreal Anao Torsten, Jr."
-    "Edmund Rick"
-    "Mr. Irley Anjeev"
-    "Yden Eymour Nifer Njit Nnie, Sr."
-    "Tlyn Nold Orah"
-    "Ladonna Curtis"
-    "Racelyn Tovah Lyndon"
-    "Mrs. Rlys Ndell Xana Russell"
-    "Ms. Renna Ufic"
-    "Orrison Soohong, I"
-    "Liott Urel, Jr."
-    "Sra. Lessika Armi"
-    "Sir Anford Huey Skef Hartmann Usty"
-    "Ms. Evetta Iane"
-    "Arell Rlos Caleb Exanderson"
-    "Ms. Rren Arney"
-    "Rgot Hienz"
-    "Levia"
-    "Coreena Icholas"
-    "Herr Omeo Riggs, Sr."
-    "Miss Oras Eggy Toby"
-    "Aila"
-    "Amisha"
-    "Wonda Danni"
-    "Miss Rilou Idhyanatoly Chuck"
-    "Arta Raja"
-    "Herr Lair Olkka"
-    "Mr. Rady Rtha"
-    "Kary Foklis Ofia Aleb"
-    "Mr. Iego Cisco"
-    "Lincoln Ario Orrainer, Jr."
-    "Lake Main, Jr."
-    "Numbery"
-    "Aniqua Hsin"
-    "Orileen Errancois"
-    "Rray Ouiqa"
-    "Ms. Mackenzie Tofer Oshua"
-    "Jasonya Etry"
-    "Mora Aryl Raif"
-    "Sr. Obias Kerry, V"
-    "Lane Dwight Rouk"
-    "Mr. Noah Alter Giovanni"
-    "Ms. Rucila Clyde"
-    "Srta. Ulinetta Alastair"
-    "Grice Erdar"
-    "Arrell Oyuki, Jr."
-    "Milton Farouk, II"
-    "Vory Cris"
-    "Lynisha"
-    "Herr Dylan Ewis"))
