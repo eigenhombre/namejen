@@ -153,6 +153,8 @@
 
 (defn name-maker
   "
+  Example:
+
       (repeatedly 10 name-maker)
       ;;=>
       '(\"Deidra Olas Rafael\"
@@ -165,6 +167,7 @@
         \"Larence Holly, Jr.\"
         \"Ms. Cheryn Ning\"
         \"Mr. Nces Line Herbertran\")
+
   "
   {:doc/format :markdown}
   []
