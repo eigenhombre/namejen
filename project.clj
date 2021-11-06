@@ -21,6 +21,7 @@
                              [lein-kibit "0.1.8"]]}
              :kaocha {:dependencies [[lambdaisland/kaocha "1.0.887"]]}
              :uberjar {:aot :all}}
+  :codox {:output-path "docs"}
   :scm {:name "git"
         :url "https://github.com/eigenhombre/namejen"}
   :repositories [["releases" {:url "https://repo.clojars.org"
