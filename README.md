@@ -79,7 +79,10 @@ The functions of interest are in the `namejen.names` namespace:
 - The `name-maker` function is the composition of the two functions,
   for convenience.
 
-See [the API docs](https://htmlpreview.github.io/?https://raw.githubusercontent.com/eigenhombre/namejen/master/docs/index.html) for more info.
+See [the API
+docs](https://rawcdn.githack.com/eigenhombre/namejen/master/docs/index.html)
+for more info.
+
 
 ### TO DO list:
 - Allow users to specify source of names
