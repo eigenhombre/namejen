@@ -71,11 +71,12 @@ Add to your `project.clj` or `deps.edn`:
 
 The functions of interest are in the `namejen.names` namespace:
 
-- [gen-name-data-as-map](https://github.com/eigenhombre/namejen/blob/master/src/namejen/names.clj#L49) generates gender, first name,
-  honorific/prefix, surname(s), and generation info (Jr., III, etc.).
-- [format-name-map](https://github.com/eigenhombre/namejen/blob/master/src/namejen/names.clj#L70) formats the output of the previous function into
+- `gen-name-data-as-map` generates gender, first name, possible
+  honorifics/prefixes, surname(s), and generation info (Jr., III,
+  etc.).
+- `format-name-map` formats the output of the previous function into
   something readable.
-- The [name-maker](https://github.com/eigenhombre/namejen/blob/master/src/namejen/names.clj#L70) function is the composition of the two functions,
+- The `name-maker` function is the composition of the two functions,
   for convenience.
 
 ### TO DO list:

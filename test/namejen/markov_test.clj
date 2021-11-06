@@ -1,6 +1,6 @@
 (ns namejen.markov-test
   (:require [clojure.test :refer [deftest is testing]]
-            [namejen.io :refer [get-name-data]]
+            [namejen.io :refer [resource-file-lines]]
             [namejen.markov :refer [generate-single-name
                                     make-nextmap
                                     build-map-from-strings
@@ -9,7 +9,7 @@
 (deftest name-generation-basics
   (testing "I can generate a name with the basic name maker"
     (let [nom (->> "names.txt"
-                   get-name-data
+                   resource-file-lines
                    (build-map-from-strings 4)
                    generate-single-name)]
       (is (seq nom)))))

@@ -6,7 +6,7 @@
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :description "A Markov-chain-based name generator for games, fiction, &c."
   :deploy-repositories [["releases" :clojars]]
-  :main ^:skip-aot namejen.core
+  :main ^:skip-aot namejen.main
   :uberjar-name "namejen.jar"
   :target-path "target/%s"
   :aliases {"kaocha" ["with-profile" "+kaocha" "run" "-m" "kaocha.runner"]
@@ -14,8 +14,9 @@
                                         "\\[eigenhombre/namejen \"" "\"]"
                                         "version"]}
   :profiles {:dev {:dependencies []
-                   :plugins [[lein-bikeshed "0.5.2"]
-                             [jonase/eastwood "0.9.9"]
+                   :plugins [[jonase/eastwood "0.9.9"]
+                             [lein-bikeshed "0.5.2"]
+                             [lein-codox "0.10.8"]
                              [lein-file-replace "0.1.0"]
                              [lein-kibit "0.1.8"]]}
              :kaocha {:dependencies [[lambdaisland/kaocha "1.0.887"]]}

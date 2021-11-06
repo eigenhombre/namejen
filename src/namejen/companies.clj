@@ -1,18 +1,18 @@
 (ns namejen.companies
   (:require [clojure.string :as string]
-            [namejen.io :refer [get-name-data]]
+            [namejen.io :refer [resource-file-lines]]
             [namejen.markov :refer [generate-single-name
                                     build-map-from-strings]]))
 
 (def ^:private company-data-map
   (->> "companies.txt"
-       get-name-data
+       resource-file-lines
        (build-map-from-strings 4)))
 
-(defn num-company-names []
+(defn ^:private num-company-names []
   (rand-nth [1 1 1 2 2 3 4]))
 
-(defn corptype []
+(defn ^:private corptype []
   (rand-nth ["LLC"
              "Incorporated"
              "Inc."
@@ -21,13 +21,19 @@
              "SA"
              "AG"]))
 
-(defn domain []
+(defn ^:private domain []
   (rand-nth ["com" "com" "com" "net" "us" "info" "tv" "biz"]))
 
-(defn remove-hyphens [s]
-  (string/join (remove #{\' \&} s)))
+(defn ^:private normalize [s]
+  (-> s
+      (string/replace #"\'|\&" "")
+      (string/replace #"^-" "")))
 
-(defn gen-company-name-and-website []
+(defn gen-company
+  "
+  Generate a fake company and its website.  Very very alpha.
+  "
+  []
   (let [num-names (num-company-names)
         companies (repeatedly num-names (partial generate-single-name
                                                  company-data-map))
@@ -39,34 +45,39 @@
                     (corptype))))
         website (str (->> companies
                           (take 3)
-                          (map remove-hyphens)
+                          (map normalize)
                           (map clojure.string/lower-case)
                           (clojure.string/join (rand-nth ["-" "" "."])))
                      "."
                      (domain))]
-    [compname website]))
+    {:name compname
+     :website website}))
 
 (comment
-  (repeatedly 20 gen-company-name-and-website)
+  (->> gen-company
+       (repeatedly 20)
+       (map (juxt :name :website)))
   ;;=>
-  (["Tolive" "tolive.com"]
-   ["Phone Mnicor" "phone.mnicor.com"]
-   ["Mercial -cola Banknortek" "mercial.-cola.banknortek.com"]
-   ["Eluxe, Incorporated" "eluxe.com"]
-   ["Tific" "tific.com"]
-   ["Anley Gemstar, Incorporated" "anleygemstar.net"]
-   ["Laboratory Ilicon, AG" "laboratoryilicon.info"]
-   ["Teco, SA" "teco.com"]
-   ["Pfizer Valspartment Acrporatory Chaels, AG"
-    "pfizer-valspartment-acrporatory.info"]
-   ["Ifax L-myers, Incorporated" "ifaxl-myers.com"]
-   ["Leodusa Paychex, Incorporated" "leodusa-paychex.com"]
-   ["Erck, Incorporated" "erck.us"]
-   ["Rgia Hercules Engelhard Rtford, Inc." "rgia.hercules.engelhard.net"]
-   ["Dentair, Incorporated" "dentair.biz"]
-   ["E*trade" "e*trade.us"]
-   ["Rated Everly-clark" "ratedeverly-clark.tv"]
-   ["Onati Lcase Uintiles, SA" "onatilcaseuintiles.us"]
-   ["Olidated Maytag Nova, Inc." "olidatedmaytagnova.com"]
-   ["Adio Evrontex Almolive, AG" "adioevrontexalmolive.com"]
-   ["Ana-packaging, Incorporated" "ana-packaging.com"]))
+  (["Vance, SA" "vance.net"]
+   ["Tozone" "tozone.tv"]
+   ["A-cola" "a-cola.biz"]
+   ["Rrah's Ckard, Incorporated" "rrahsckard.biz"]
+   ["Mpbellstar-tv L-mart, Inc." "mpbellstar-tvl-mart.us"]
+   ["Sterna Bergen Flowers" "sterna.bergen.flowers.com"]
+   ["Edison, Incorporated" "edison.com"]
+   ["Adams T-pacific" "adams.t-pacific.info"]
+   ["Oneer-standarden Precision Live Nagra, SA"
+    "oneer-standarden.precision.live.us"]
+   ["Inens, LLC" "inens.tv"]
+   ["Ynegy, Inc." "ynegy.com"]
+   ["Innacle" "innacle.net"]
+   ["Rathon Trade Northermance Pervalue"
+    "rathon.trade.northermance.biz"]
+   ["Kerr-mcgee Rlisle Eader's, Incorporated"
+    "kerr-mcgeerlisleeaders.us"]
+   ["Roger" "roger.info"]
+   ["Ap-on" "ap-on.us"]
+   ["Costco" "costco.tv"]
+   ["Contington Pittston Minion" "contington.pittston.minion.info"]
+   ["Systems, Incorporated" "systems.tv"]
+   ["Hughes Lucenturytel" "hughes.lucenturytel.com"]))

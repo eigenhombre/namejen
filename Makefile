@@ -1,6 +1,6 @@
-.PHONY: all test docker release
+.PHONY: all test docker release doc
 
-all: test uberjar
+all: test uberjar doc
 
 target/uberjar/namejen.jar: src/namejen/*.clj resources/*.txt resources/*.edn
 	lein uberjar
@@ -12,6 +12,9 @@ uberjar: target/uberjar/namejen.jar
 
 release:
 	lein release
+
+doc:
+	lein codox
 
 docker:
 	docker build --progress tty -t namejen .
