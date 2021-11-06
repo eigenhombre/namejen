@@ -2,7 +2,7 @@
 
 all: test uberjar doc
 
-target/uberjar/namejen.jar: src/namejen/*.clj resources/*.txt resources/*.edn
+target/uberjar/namejen.jar: src/namejen/*.clj resources/*.txt
 	lein uberjar
 
 test:

@@ -4,7 +4,7 @@
             [namejen.markov :refer [build-map-from-seqs
                                     generate-sequence]]))
 
-(defn string-tokens
+(defn ^:private string-tokens
   "
   Split string on whitespace and remove extraneous empty strings.
   "
@@ -25,13 +25,24 @@
     (str | ".")))
 
 (comment
-  ;; Get text from Project Gutenberg.
+  ;; Get text from Project Gutenberg:
   (def ^:private siddhartha (atom nil))
+
+  (require '[clojure.java.shell :as sh])
+
+  ;; FIXME: This is currently broken.
   (defn- get-siddhartha []
     (if-let [s @siddhartha]
       s
-      (reset! siddhartha
-              (slurp "https://www.gutenberg.org/cache/epub/2500/pg2500.txt"))))
+      (let [{:keys [exit err]}
+            (sh/sh "curl"
+                   "https://www.gutenberg.org/cache/epub/2500/pg2500.txt"
+                   "-o"
+                   "/tmp/siddharta.txt")]
+        (assert (zero? exit))
+        (reset! siddhartha
+                (slurp "https://www.gutenberg.org/cache/epub/2500/pg2500.txt"))
+        :ok)))
 
   (defn sentences
     "
@@ -80,13 +91,12 @@
   (->> (sentence-map)
        (into {})
        pr-str
-       (spit "/tmp/sentences.edn")))
+       (spit "/tmp/sentences.edn"))
 
-;; Read cached Markov chain map for sentences:
-(defn sentence-map []
-  (read-string (slurp (io/resource "sentences.edn"))))
+  ;; Read cached Markov chain map for sentences:
+  (defn sentence-map []
+    (read-string (slurp "/tmp/sentences.edn")))
 
-(comment
   (let [m (sentence-map)]
     (repeatedly 10 #(generate-sentence m)))
   ;;=>
