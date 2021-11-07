@@ -1,5 +1,4 @@
 (defproject eigenhombre/namejen "0.1.22-SNAPSHOT"
-  :dependencies [[org.clojure/clojure "1.10.3"]]
   :url "https://github.com/eigenhombre/namejen"
   :resource-paths ["resources"]
   :license {:name "Eclipse Public License"
@@ -13,15 +12,19 @@
             "update-version-in-readme" ["file-replace" "README.md"
                                         "\\[eigenhombre/namejen \"" "\"]"
                                         "version"]}
+  :dependencies [[org.clojure/clojure "1.10.3"]
+                 [org.clojure/clojurescript "1.10.891"]]
   :profiles {:dev {:dependencies []
                    :plugins [[jonase/eastwood "0.9.9"]
                              [lein-bikeshed "0.5.2"]
+                             [lein-cljsbuild "1.1.8"]
                              [lein-codox "0.10.8"]
                              [lein-file-replace "0.1.0"]
                              [lein-kibit "0.1.8"]]}
              :kaocha {:dependencies [[lambdaisland/kaocha "1.0.887"]]}
              :uberjar {:aot :all}}
   :codox {:output-path "docs"}
+  :source-paths ["src/clj"]
   :scm {:name "git"
         :url "https://github.com/eigenhombre/namejen"}
   :repositories [["releases" {:url "https://repo.clojars.org"
@@ -38,4 +41,9 @@
                   ["deploy" "clojars"]
                   ["change" "version" "leiningen.release/bump-version"]
                   ["vcs" "commit"]
-                  ["vcs" "push"]])
+                  ["vcs" "push"]]
+
+  :cljsbuild {:builds [{:source-paths ["src/cljs"]
+                        :jar true
+                        :compiler {:optimizations :whitespace
+                                   :pretty-print true}}]})
