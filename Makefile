@@ -1,9 +1,6 @@
-.PHONY: all test docker release doc cljs
+.PHONY: all test docker release doc cljs jar uberjar
 
 all: test cljs uberjar doc
-
-target/uberjar/namejen.jar: src/clj/namejen/*.clj src/cljs/namejen/*.cljs test/namejen/*.clj resources/*.txt
-	lein uberjar
 
 cljs:
 	lein cljsbuild once
@@ -11,7 +8,14 @@ cljs:
 test:
 	lein do kaocha, bikeshed, kibit, eastwood
 
-uberjar: target/uberjar/namejen.jar
+uberjar:
+	lein uberjar
+
+clean:
+	rm -rf target docs
+
+jar:
+	lein jar
 
 release:
 	lein release

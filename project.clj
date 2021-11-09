@@ -6,25 +6,22 @@
   :description "A Markov-chain-based name generator for games, fiction, &c."
   :deploy-repositories [["releases" :clojars]]
   :main ^:skip-aot namejen.main
-  :uberjar-name "namejen.jar"
-  :target-path "target/%s"
   :aliases {"kaocha" ["with-profile" "+kaocha" "run" "-m" "kaocha.runner"]
             "update-version-in-readme" ["file-replace" "README.md"
                                         "\\[eigenhombre/namejen \"" "\"]"
                                         "version"]}
   :dependencies [[org.clojure/clojure "1.10.3"]
                  [org.clojure/clojurescript "1.10.891"]]
+  :plugins [[lein-cljsbuild "1.1.8"]]
   :profiles {:dev {:dependencies []
                    :plugins [[jonase/eastwood "0.9.9"]
                              [lein-bikeshed "0.5.2"]
-                             [lein-cljsbuild "1.1.8"]
                              [lein-codox "0.10.8"]
                              [lein-file-replace "0.1.0"]
                              [lein-kibit "0.1.8"]]}
-             :kaocha {:dependencies [[lambdaisland/kaocha "1.0.887"]]}
-             :uberjar {:aot :all}}
+             :kaocha {:dependencies [[lambdaisland/kaocha "1.0.887"]]}}
   :codox {:output-path "docs"}
-  :source-paths ["src/clj"]
+  :source-paths ["src/main/clojure"]
   :scm {:name "git"
         :url "https://github.com/eigenhombre/namejen"}
   :repositories [["releases" {:url "https://repo.clojars.org"
@@ -43,7 +40,16 @@
                   ["vcs" "commit"]
                   ["vcs" "push"]]
 
-  :cljsbuild {:builds [{:source-paths ["src/cljs"]
+  :cljsbuild {:builds [{:id "dev"
+                        :source-paths ["src/main/clojure"]
                         :jar true
                         :compiler {:optimizations :whitespace
-                                   :pretty-print true}}]})
+                                   :output-dir "target/cljs/dev"
+                                   :output-to "target/cljs/namejen_dev.js"
+                                   :pretty-print true}}
+                       {:id "prod"
+                        :source-paths ["src/main/clojure"]
+                        :compiler {:optimizations :advanced
+                                   :output-dir "target/cljs/prod"
+                                   :output-to "target/cljs/namejen_prod.js"
+                                   :pretty-print false}}]})
