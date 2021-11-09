@@ -24,7 +24,7 @@
   :codox {:output-path "docs"
           :source-uri
           {#".*"
-           "https://github.com/clojure/namejen/blob/master/{filepath}#L{line}"}}
+           "https://github.com/eigenhombre/namejen/blob/master/{filepath}#L{line}"}}
   :source-paths ["src/main/clojure"]
   :scm {:name "git"
         :url "https://github.com/eigenhombre/namejen"}
