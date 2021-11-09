@@ -58,8 +58,8 @@ input provided, the output seems reminiscent of names from an
 
 ### As a standalone program
 
-    make                                  # once
-    java -jar target/uberjar/namejen.jar  # every time
+    make                                             # once
+    java -jar target/$(ls target | grep standalone)  # each time
 
 ### As a library
 
