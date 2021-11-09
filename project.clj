@@ -21,7 +21,10 @@
                              [lein-kibit "0.1.8"]]}
              :kaocha {:dependencies [[lambdaisland/kaocha "1.0.887"]]}
              :uberjar {:aot :all}}
-  :codox {:output-path "docs"}
+  :codox {:output-path "docs"
+          :source-uri
+          {#".*"
+           "https://github.com/clojure/namejen/blob/master/{filepath}#L{line}"}}
   :source-paths ["src/main/clojure"]
   :scm {:name "git"
         :url "https://github.com/eigenhombre/namejen"}
