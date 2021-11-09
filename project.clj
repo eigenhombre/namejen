@@ -19,7 +19,8 @@
                              [lein-codox "0.10.8"]
                              [lein-file-replace "0.1.0"]
                              [lein-kibit "0.1.8"]]}
-             :kaocha {:dependencies [[lambdaisland/kaocha "1.0.887"]]}}
+             :kaocha {:dependencies [[lambdaisland/kaocha "1.0.887"]]}
+             :uberjar {:aot :all}}
   :codox {:output-path "docs"}
   :source-paths ["src/main/clojure"]
   :scm {:name "git"
