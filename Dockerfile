@@ -8,4 +8,4 @@ RUN apt-get install -qq -y leiningen make
 WORKDIR /home/janice
 COPY . /home/janice
 RUN make
-RUN java -jar target/uberjar/namejen.jar
+RUN java -jar target/$(ls target | grep standalone)
