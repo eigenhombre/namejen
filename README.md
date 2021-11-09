@@ -80,7 +80,7 @@ The functions of interest are in the `namejen.names` namespace:
   for convenience.
 
 See [the API
-docs](https://rawcdn.githack.com/eigenhombre/namejen/master/docs/index.html)
+docs](https://raw.githack.com/eigenhombre/namejen/master/docs/index.html)
 for more info.
 
 
