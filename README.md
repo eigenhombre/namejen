@@ -65,30 +65,43 @@ input provided, the output seems reminiscent of names from an
 
 Add to your `project.clj` or `deps.edn`:
 
-```
+
     [eigenhombre/namejen "0.1.21"]
-```
 
-The functions of interest are in the `namejen.names` namespace:
 
-- `gen-name-data-as-map` generates gender, first name, possible
-  honorifics/prefixes, surname(s), and generation info (Jr., III,
-  etc.).
-- `format-name-map` formats the output of the previous function into
-  something readable.
-- The `name-maker` function is the composition of the two functions,
-  for convenience.
+Then,
+
+    (require '[namejen.names :as n])
+
+    (n/gen-name-data-as-map)
+    ;;=>
+    {:gender :female
+     :first-name "Luette"
+     :prefix nil
+     :surnames ["Adlai" "Angela" "Stlik"]
+     :generation nil}
+
+    ;; or
+    (repeatedly 10 name-maker)
+    ;;=>
+    '("Deidra Olas Rafael"
+      "Ms. Rochellye Ryce"
+      "Xuan Amiltos"
+      "Mesha"
+      "Mr. Rain Brian"
+      "Ms. Rnelieselottie Tendra"
+      "Srta. Nora Adrianto"
+      "Larence Holly, Jr."
+      "Ms. Cheryn Ning"
+      "Mr. Nces Line Herbertran")
+
+Several other functions in [the `namejen.names`
+namespace](https://raw.githack.com/eigenhombre/namejen/master/docs/namejen.names.html)
+may be of interest.
 
 See [the API
 docs](https://raw.githack.com/eigenhombre/namejen/master/docs/index.html)
-for more info.
-
-
-### TO DO list:
-- Allow users to specify source of names
-- Allow users to specify Markov chain lengths. The longer the Markov
-  chain length, the more the names will sound like "real" names but
-  the less variations you will get.
+for comprehensive info.
 
 ## License
 
