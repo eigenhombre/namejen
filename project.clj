@@ -26,6 +26,7 @@
           {#".*"
            "https://github.com/eigenhombre/namejen/blob/master/{filepath}#L{line}"}}
   :source-paths ["src/main/clojure"]
+  :test-paths ["src/test/clojure"]
   :scm {:name "git"
         :url "https://github.com/eigenhombre/namejen"}
   :repositories [["releases" {:url "https://repo.clojars.org"
