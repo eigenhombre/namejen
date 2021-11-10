@@ -46,14 +46,14 @@
                   ["vcs" "push"]]
 
   :cljsbuild {:builds [{:id "dev"
-                        :source-paths ["src/main/clojure"]
+                        :source-paths ["src/main/clojure" "src/test/clojure"]
                         :jar true
                         :compiler {:optimizations :whitespace
                                    :output-dir "target/cljs/dev"
                                    :output-to "target/cljs/namejen_dev.js"
                                    :pretty-print true}}
                        {:id "prod"
-                        :source-paths ["src/main/clojure"]
+                        :source-paths ["src/main/clojure" "src/test/clojure"]
                         :compiler {:optimizations :advanced
                                    :output-dir "target/cljs/prod"
                                    :output-to "target/cljs/namejen_prod.js"

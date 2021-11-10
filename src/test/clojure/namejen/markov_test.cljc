@@ -1,18 +1,20 @@
 (ns namejen.markov-test
-  (:require [clojure.test :refer [deftest is testing]]
-            [namejen.io :refer [resource-file-lines]]
-            [namejen.markov :refer [generate-single-name
+  (:require #?(:clj [clojure.test :refer [deftest is testing]])
+            #?(:cljs [cljs.test :refer-macros [deftest testing is]])
+            #?(:clj [namejen.io :refer [resource-file-lines]])
+            [namejen.markov :refer [#?(:clj generate-single-name)
                                     make-nextmap
                                     build-map-from-strings
                                     build-map-from-seqs]]))
 
-(deftest name-generation-basics
-  (testing "I can generate a name with the basic name maker"
-    (let [nom (->> "names.txt"
-                   resource-file-lines
-                   (build-map-from-strings 4)
-                   generate-single-name)]
-      (is (seq nom)))))
+#?(:clj
+   (deftest name-generation-basics
+     (testing "I can generate a name with the basic name maker"
+       (let [nom (->> "names.txt"
+                      resource-file-lines
+                      (build-map-from-strings 4)
+                      generate-single-name)]
+         (is (seq nom))))))
 
 (deftest chain-test
   (testing "making chains"
@@ -26,7 +28,7 @@
              (b) #{l}}
            (make-nextmap 1 '((a l) (b l)))))))
 
-(deftest trransition-map-test
+(deftest transition-map-test
   (testing "building Markov transition map from seqs"
     (is (= {["A" "dog"] #{"is"}
             ["dog" "is"] #{"not" "hungry"}
