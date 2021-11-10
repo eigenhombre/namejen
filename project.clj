@@ -12,7 +12,8 @@
                                         "version"]}
   :dependencies [[org.clojure/clojure "1.10.3"]
                  [org.clojure/clojurescript "1.10.891"]]
-  :plugins [[lein-cljsbuild "1.1.8"]]
+  :plugins [[lein-cljsbuild "1.1.8"]
+            [lein-doo "0.1.11"]]
   :profiles {:dev {:dependencies []
                    :plugins [[jonase/eastwood "0.9.9"]
                              [lein-bikeshed "0.5.2"]
@@ -52,6 +53,12 @@
                                    :output-dir "target/cljs/dev"
                                    :output-to "target/cljs/namejen_dev.js"
                                    :pretty-print true}}
+                       {:id "test"
+                        :source-paths ["src/main/clojure" "src/test/clojure"]
+                        :compiler {:main test.clojure.namejen.test-runner
+                                   :output-to "target/testable.js"
+                                   :target :nodejs
+                                   :optimizations :none}}
                        {:id "prod"
                         :source-paths ["src/main/clojure" "src/test/clojure"]
                         :compiler {:optimizations :advanced

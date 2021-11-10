@@ -103,6 +103,31 @@ See [the API
 docs](https://raw.githack.com/eigenhombre/namejen/master/docs/index.html)
 for comprehensive info.
 
+## Building
+
+Build tasks are managed using `Make`.  You will need the following installed locally:
+
+- make
+- Java
+- Leiningen
+- NodeJS
+
+`make` by itself or `make all` will perform all the build tasks
+locally; or, you can build inside a Docker container using `make
+docker`.
+
+The build tasks include:
+
+- jar file and überjar
+- Clojure unit tests (Kaocha test runner)
+- ClojureScript unit tests (in NodeJS via `lein doo`)
+- linting with Kibit, Bikeshed and Eastwood
+- API doc generation
+
+This all may seem like overkill for a name generation library, but I
+do want this to be fairly reusable and I'm trying to establish good
+habits ;-).
+
 ## License
 
 Copyright (C) 2012-2021 John Jacobsen.
