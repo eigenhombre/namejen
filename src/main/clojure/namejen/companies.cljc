@@ -1,8 +1,8 @@
 (ns namejen.companies
   (:require [clojure.string :as string]
-            [namejen.companies-list :as cl]
-            [namejen.markov :refer [generate-single-name
-                                    build-map-from-strings]]))
+            [namejen.markov :refer [build-map-from-strings
+                                    generate-single-name]]
+            [namejen.lists.companies :as cl]))
 
 (def ^:private company-data-map
   (->> cl/companies-list

@@ -5,11 +5,11 @@
                                     make-nextmap
                                     build-map-from-strings
                                     build-map-from-seqs]]
-            [namejen.names.names-list :as nl]))
+            [namejen.lists.names :as nn]))
 
 (deftest name-generation-basics
   (testing "I can generate a name with the basic name maker"
-    (let [nom (->> nl/names-list
+    (let [nom (->> nn/names-list
                    (map str)
                    (build-map-from-strings 4)
                    generate-single-name)]

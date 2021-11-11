@@ -1,4 +1,4 @@
-(ns namejen.companies-list)
+(ns namejen.lists.companies)
 
 (def companies-list
   '("3Com"

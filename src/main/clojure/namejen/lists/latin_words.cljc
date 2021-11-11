@@ -1,4 +1,4 @@
-(ns namejen.names.latin-words-list)
+(ns namejen.lists.latin-words)
 
 (def
   ^{:doc "Adapted from

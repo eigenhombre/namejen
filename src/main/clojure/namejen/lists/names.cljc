@@ -1,4 +1,4 @@
-(ns namejen.names.names-list)
+(ns namejen.lists.names)
 
 (def names-list
   '(Aaron

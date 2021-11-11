@@ -4,7 +4,7 @@
 
 ![build](https://github.com/eigenhombre/namejen/actions/workflows/build.yml/badge.svg)
 
-Random name generator, written in Clojure, that uses Markov chains to
+Random name generator, written in Clojure / ClojureScript, that uses Markov chains to
 follow common syllabic patterns.  Inspired by [this Python project](http://www.roguebasin.com/index.php?title=Markov_chains_name_generator_in_Python), and somewhat dual to [this Common Lisp library](https://github.com/eigenhombre/nominal).
 
 When run standalone, the output is a column of names suitable for
@@ -65,9 +65,7 @@ input provided, the output seems reminiscent of names from an
 
 Add to your `project.clj` or `deps.edn`:
 
-
     [eigenhombre/namejen "0.1.21"]
-
 
 Then,
 
@@ -121,7 +119,7 @@ The build tasks include:
 - jar file and überjar
 - Clojure unit tests (Kaocha test runner)
 - ClojureScript unit tests (in NodeJS via `lein doo`)
-- linting with Kibit, Bikeshed and Eastwood
+- linting with Bikeshed and Eastwood (Kibit disabled for now, because of lack of reader conditional support)
 - API doc generation
 
 This all may seem like overkill for a name generation library, but I

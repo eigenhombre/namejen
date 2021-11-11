@@ -1,7 +1,7 @@
 (ns namejen.main
   (:require [clojure.string :as string]
             [namejen.names :refer [name-maker]])
-  (:gen-class))
+  #?(:clj (:gen-class)))
 
 (defn -main
   "
@@ -9,7 +9,10 @@
   "
   {:doc/format :markdown}
   [& [nstr & _]]
-  (let [n (if nstr (Integer/parseInt nstr) 50)]
+  (let [n (if nstr
+            #?(:clj (Integer/parseInt nstr)
+               :cljs (js/parseInt nstr))
+            50)]
     (->> name-maker
          repeatedly
          (take n)

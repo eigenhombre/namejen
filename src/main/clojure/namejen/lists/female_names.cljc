@@ -1,4 +1,4 @@
-(ns namejen.names.female-names-list)
+(ns namejen.lists.female-names)
 
 (def female-names-list
   '(aaron

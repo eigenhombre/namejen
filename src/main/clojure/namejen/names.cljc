@@ -1,11 +1,10 @@
 (ns namejen.names
   (:require [clojure.pprint :refer [cl-format]]
             [clojure.string :as string]
-            #_[namejen.io :refer [resource-file-lines]]
-            [namejen.names.names-list :as nl]
-            [namejen.names.female-names-list :as fnl]
-            [namejen.names.male-names-list :as mnl]
-            [namejen.names.latin-words-list :as lwl]
+            [namejen.lists.names :as nl]
+            [namejen.lists.female-names :as fnl]
+            [namejen.lists.male-names :as mnl]
+            [namejen.lists.latin-words :as lwl]
             [namejen.markov :refer [generate-single-name
                                     build-map-from-strings]]))
 
@@ -38,11 +37,6 @@
   (->> namelists
        (mapcat (partial map str))
        (build-map-from-strings 4)))
-
-;; (defn ^:private name-map-from-multi-files [files]
-;;   (->> files
-;;        (mapcat resource-file-lines)
-;;        (build-map-from-strings 4)))
 
 (defn ^:private name-map-from-list [namelist]
   (->> namelist

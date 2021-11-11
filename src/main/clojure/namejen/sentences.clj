@@ -4,27 +4,30 @@
             [namejen.markov :refer [build-map-from-seqs
                                     generate-sequence]]))
 
-(defn ^:private string-tokens
-  "
+;; Experimental work, kept here for prosperity:
+(comment
+  (defn ^:private string-tokens
+    "
   Split string on whitespace and remove extraneous empty strings.
   "
-  [s] (->> s
-           (#(string/split % #" "))
-           (remove #{""})))
+    [s] (->> s
+             (#(string/split % #" "))
+             (remove #{""})))
 
-(defn generate-sentence
-  "
+  (defn generate-sentence
+    "
   Generate sample sentence from the given map.
   "
-  [smap]
-  (as-> smap |
-    (generate-sequence |)
-    (vec |)
-    (update-in | [0] string/capitalize)
-    (string/join " " |)
-    (str | ".")))
+    [smap]
+    (as-> smap |
+      (generate-sequence |)
+      (vec |)
+      (update-in | [0] string/capitalize)
+      (string/join " " |)
+      (str | ".")))
 
-(comment
+
+
   ;; Get text from Project Gutenberg:
   (def ^:private siddhartha (atom nil))
 
