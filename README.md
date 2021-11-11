@@ -65,7 +65,7 @@ input provided, the output seems reminiscent of names from an
 
 Add to your `project.clj` or `deps.edn`:
 
-    [eigenhombre/namejen "0.1.22"]
+    [eigenhombre/namejen "0.1.23"]
 
 Then,
 

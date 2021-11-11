@@ -1,4 +1,4 @@
-(defproject eigenhombre/namejen "0.1.23-SNAPSHOT"
+(defproject eigenhombre/namejen "0.1.23"
   :url "https://github.com/eigenhombre/namejen"
   :resource-paths ["resources"]
   :license {:name "Eclipse Public License"
