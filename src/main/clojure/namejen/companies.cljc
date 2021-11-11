@@ -5,9 +5,7 @@
             [namejen.lists.companies :as cl]))
 
 (def ^:private company-data-map
-  (->> cl/companies-list
-       (map str)
-       (build-map-from-strings 4)))
+  (build-map-from-strings 4 cl/companies-list))
 
 (defn ^:private num-company-names []
   (rand-nth [1 1 1 2 2 3 4]))

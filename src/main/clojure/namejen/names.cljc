@@ -30,18 +30,16 @@
 (defn ^:private choose-whether [n]
   (zero? (rand-int n)))
 
-(defn ^:private num-names [] (rand-nth (concat (repeat 5 2)
-                                               [1 3 3 4 5])))
+(defn ^:private num-names []
+  (rand-nth (concat (repeat 5 2) [1 3 3 4 5])))
 
 (defn ^:private name-map-from-multi-lists [namelists]
   (->> namelists
-       (mapcat (partial map str))
+       (apply concat)
        (build-map-from-strings 4)))
 
 (defn ^:private name-map-from-list [namelist]
-  (->> namelist
-       (map str)
-       (build-map-from-strings 4)))
+  (build-map-from-strings 4 namelist))
 
 (def ^:private all-nextmap
   (name-map-from-multi-lists [nl/names-list
