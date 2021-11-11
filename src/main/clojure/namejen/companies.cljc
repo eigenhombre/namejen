@@ -1,12 +1,12 @@
 (ns namejen.companies
   (:require [clojure.string :as string]
-            [namejen.io :refer [resource-file-lines]]
+            [namejen.companies-list :as cl]
             [namejen.markov :refer [generate-single-name
                                     build-map-from-strings]]))
 
 (def ^:private company-data-map
-  (->> "companies.txt"
-       resource-file-lines
+  (->> cl/companies-list
+       (map str)
        (build-map-from-strings 4)))
 
 (defn ^:private num-company-names []

@@ -1,7 +1,11 @@
 (ns namejen.names
   (:require [clojure.pprint :refer [cl-format]]
             [clojure.string :as string]
-            [namejen.io :refer [resource-file-lines]]
+            #_[namejen.io :refer [resource-file-lines]]
+            [namejen.names.names-list :as nl]
+            [namejen.names.female-names-list :as fnl]
+            [namejen.names.male-names-list :as mnl]
+            [namejen.names.latin-words-list :as lwl]
             [namejen.markov :refer [generate-single-name
                                     build-map-from-strings]]))
 
@@ -30,29 +34,31 @@
 (defn ^:private num-names [] (rand-nth (concat (repeat 5 2)
                                                [1 3 3 4 5])))
 
-(defn ^:private name-map-from-multi-files [files]
-  (->> files
-       (mapcat resource-file-lines)
+(defn ^:private name-map-from-multi-lists [namelists]
+  (->> namelists
+       (mapcat (partial map str))
        (build-map-from-strings 4)))
 
-(defn ^:private name-map-from-resource-file [fname]
-  (->> fname
-       resource-file-lines
+;; (defn ^:private name-map-from-multi-files [files]
+;;   (->> files
+;;        (mapcat resource-file-lines)
+;;        (build-map-from-strings 4)))
+
+(defn ^:private name-map-from-list [namelist]
+  (->> namelist
+       (map str)
        (build-map-from-strings 4)))
 
 (def ^:private all-nextmap
-  (name-map-from-multi-files ["names.txt"
-                              "male-names.txt"
-                              "female-names.txt"
-                              ;; Adapted from
-                              ;; https://www.math.ubc.ca/\
-                              ;; ~cass/frivs/latin/latin-dict-full.html:
-                              "latin-words.txt"]))
+  (name-map-from-multi-lists [nl/names-list
+                              mnl/male-names-list
+                              fnl/female-names-list
+                              lwl/latin-words-list]))
 
-(def ^:private default-nextmap (name-map-from-resource-file "names.txt"))
-(def ^:private male-name-map (name-map-from-resource-file "male-names.txt"))
-(def ^:private female-name-map (name-map-from-resource-file "female-names.txt"))
-(def ^:private latin-name-map (name-map-from-resource-file "latin-words.txt"))
+(def ^:private default-nextmap (name-map-from-list nl/names-list))
+(def ^:private male-name-map (name-map-from-list mnl/male-names-list))
+(def ^:private female-name-map (name-map-from-list fnl/female-names-list))
+(def ^:private latin-name-map (name-map-from-list lwl/latin-words-list))
 
 (defn male-name
   "

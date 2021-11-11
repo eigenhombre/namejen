@@ -1,20 +1,19 @@
 (ns namejen.markov-test
   (:require #?(:clj [clojure.test :refer [deftest is testing]])
             #?(:cljs [cljs.test :refer-macros [deftest testing is]])
-            #?(:clj [namejen.io :refer [resource-file-lines]])
-            [namejen.markov :refer [#?(:clj generate-single-name)
+            [namejen.markov :refer [generate-single-name
                                     make-nextmap
                                     build-map-from-strings
-                                    build-map-from-seqs]]))
+                                    build-map-from-seqs]]
+            [namejen.names.names-list :as nl]))
 
-#?(:clj
-   (deftest name-generation-basics
-     (testing "I can generate a name with the basic name maker"
-       (let [nom (->> "names.txt"
-                      resource-file-lines
-                      (build-map-from-strings 4)
-                      generate-single-name)]
-         (is (seq nom))))))
+(deftest name-generation-basics
+  (testing "I can generate a name with the basic name maker"
+    (let [nom (->> nl/names-list
+                   (map str)
+                   (build-map-from-strings 4)
+                   generate-single-name)]
+      (is (seq nom)))))
 
 (deftest chain-test
   (testing "making chains"

@@ -1,5 +1,6 @@
 (ns namejen.names-test
-  (:require [clojure.test :refer [deftest testing is]]
+  (:require #?(:clj [clojure.test :refer [deftest is testing]])
+            #?(:cljs [cljs.test :refer-macros [deftest testing is]])
             [namejen.names :refer [name-maker]]))
 
 (deftest name-maker-test
