@@ -80,7 +80,7 @@ Then,
      :generation nil}
 
     ;; or
-    (repeatedly 10 name-maker)
+    (repeatedly 10 n/name-maker)
     ;;=>
     '("Deidra Olas Rafael"
       "Ms. Rochellye Ryce"
