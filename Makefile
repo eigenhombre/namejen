@@ -27,4 +27,4 @@ doc:
 	lein codox
 
 docker:
-	docker build --progress tty -t namejen .
+	docker build -t namejen .
