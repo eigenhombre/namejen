@@ -1,4 +1,4 @@
-FROM adoptopenjdk:11-jre-hotspot
+FROM eclipse-temurin:21
 
 RUN apt-get -qq -y update
 RUN apt-get -qq -y upgrade
