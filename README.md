@@ -71,11 +71,11 @@ Or, to install a `namejen` command in `~/bin` (override with
 
 Add to your `deps.edn`:
 
-    eigenhombre/namejen {:mvn/version "0.1.23"}
+    eigenhombre/namejen {:mvn/version "0.1.24"}
 
 or to your `project.clj`:
 
-    [eigenhombre/namejen "0.1.23"]
+    [eigenhombre/namejen "0.1.24"]
 
 Then,
 
