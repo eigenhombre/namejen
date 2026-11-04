@@ -61,9 +61,19 @@ input provided, the output seems reminiscent of names from an
     make                                             # once
     java -jar target/$(ls target | grep standalone)  # each time
 
+Or, to install a `namejen` command in `~/bin` (override with
+`BINDIR=...`):
+
+    make install
+    namejen 10
+
 ### As a library
 
-Add to your `project.clj` or `deps.edn`:
+Add to your `deps.edn`:
+
+    eigenhombre/namejen {:mvn/version "0.1.23"}
+
+or to your `project.clj`:
 
     [eigenhombre/namejen "0.1.23"]
 
@@ -94,20 +104,20 @@ Then,
       "Mr. Nces Line Herbertran")
 
 Several other functions in [the `namejen.names`
-namespace](https://raw.githack.com/eigenhombre/namejen/master/docs/namejen.names.html)
+namespace](https://raw.githack.com/eigenhombre/namejen/master/doc/codox/namejen.names.html)
 may be of interest.
 
 See [the API
-docs](https://raw.githack.com/eigenhombre/namejen/master/docs/index.html)
+docs](https://raw.githack.com/eigenhombre/namejen/master/doc/codox/index.html)
 for comprehensive info.
 
 ## Building
 
-Build tasks are managed using `Make`.  You will need the following installed locally:
+Build tasks are managed using Make.  You will need the following installed locally:
 
-- make
+- `make`
 - Java
-- Leiningen
+- the [Clojure CLI](https://clojure.org/guides/install_clojure)
 - NodeJS
 
 `make` by itself or `make all` will perform all the build tasks
@@ -116,19 +126,18 @@ docker`.
 
 The build tasks include:
 
-- jar file and überjar
+- jar file and überjar (via `tools.build`; see `build.clj`)
 - Clojure unit tests (Kaocha test runner)
-- ClojureScript unit tests (in NodeJS via `lein doo`)
-- linting with Bikeshed and Eastwood (Kibit disabled for now, because of lack of reader conditional support)
-- API doc generation
+- ClojureScript unit tests (in NodeJS via `cljs-test-runner`)
+- ClojureScript dev and production builds
+- linting with clj-kondo
+- API doc generation (Codox, output in `doc/codox`)
 
-This all may seem like overkill for a name generation library, but I
-do want this to be fairly reusable and I'm trying to establish good
-habits ;-).
+See [doc/releasing.md](doc/releasing.md) for how releases are made.
 
 ## License
 
-Copyright (C) 2012-2021 John Jacobsen.
+Copyright (C) 2012-2026 John Jacobsen.
 
 Distributed under the Eclipse Public License, the same as Clojure.
 

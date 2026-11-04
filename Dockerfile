@@ -1,9 +1,9 @@
-FROM eclipse-temurin:21
+FROM clojure:temurin-21-tools-deps
 
 RUN apt-get -qq -y update
 RUN apt-get -qq -y upgrade
 
-RUN apt-get install -qq -y leiningen make nodejs
+RUN apt-get install -qq -y make nodejs
 
 WORKDIR /home/janice
 COPY . /home/janice

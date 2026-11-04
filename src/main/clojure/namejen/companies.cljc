@@ -38,7 +38,7 @@
         compname
         (str (clojure.string/join " " companies)
              (if (zero? (rand-nth (range 4)))
-               (str "")
+               ""
                (str ", "
                     (corptype))))
         website (str (->> companies
@@ -56,7 +56,7 @@
        (repeatedly 20)
        (map (juxt :name :website)))
   ;;=>
-  (["Vance, SA" "vance.net"]
+  '(["Vance, SA" "vance.net"]
    ["Tozone" "tozone.tv"]
    ["A-cola" "a-cola.biz"]
    ["Rrah's Ckard, Incorporated" "rrahsckard.biz"]

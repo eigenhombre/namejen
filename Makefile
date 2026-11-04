@@ -1,30 +1,49 @@
-.PHONY: all test docker release doc cljs jar uberjar
+BINDIR ?= $(HOME)/bin
+BUILD = clojure -T:build:cljs
 
+.PHONY: all
 all: test cljs-test cljs uberjar doc
 
+.PHONY: cljs
 cljs:
-	lein cljsbuild once
+	$(BUILD) cljs
 
+.PHONY: cljs-test
 cljs-test:
-	lein doo node test once
+	clojure -M:cljs:cljs-test
 
+.PHONY: test
 test:
-	lein do kaocha, bikeshed, eastwood   # kibit disabled for now, no reader conditionals....
+	clojure -M:test
+	clojure -M:lint
 
+.PHONY: uberjar
 uberjar:
-	lein uberjar
+	$(BUILD) uber
 
+.PHONY: clean
 clean:
-	rm -rf target docs
+	rm -rf target doc/codox
 
+.PHONY: jar
 jar:
-	lein jar
+	$(BUILD) jar
 
+.PHONY: release
 release:
-	lein release
+	$(BUILD) release
 
+.PHONY: doc
 doc:
-	lein codox
+	rm -rf doc/codox
+	clojure -X:codox :version '"$(shell cat VERSION)"'
 
+.PHONY: docker
 docker:
 	docker build -t namejen .
+
+.PHONY: install
+install: uberjar
+	mkdir -p $(BINDIR)
+	cp target/namejen-*-standalone.jar $(BINDIR)/namejen.jar
+	cp namejen $(BINDIR)/namejen

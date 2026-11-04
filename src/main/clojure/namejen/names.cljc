@@ -1,6 +1,5 @@
 (ns namejen.names
-  (:require [clojure.pprint :refer [cl-format]]
-            [clojure.string :as string]
+  (:require [clojure.string :as string]
             [namejen.lists.names :as nl]
             [namejen.lists.female-names :as fnl]
             [namejen.lists.male-names :as mnl]
@@ -140,14 +139,14 @@
                             (= gender :male))
                    (generation))}))
 
-(defn format-name-map [{:keys [gender prefix first-name surnames generation]}]
-  (string/join `(~@(if (and prefix
-                            (seq surnames)) [prefix " "])
+(defn format-name-map [{:keys [prefix first-name surnames generation]}]
+  (string/join `(~@(when (and prefix
+                              (seq surnames)) [prefix " "])
                  ~first-name
                  ~(if (seq surnames) " " "")
                  ~@(interpose " " surnames)
-                 ~@(if (and (seq surnames)
-                            generation) [", " generation]))))
+                 ~@(when (and (seq surnames)
+                              generation) [", " generation]))))
 
 (defn name-maker
   "

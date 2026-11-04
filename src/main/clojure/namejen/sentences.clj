@@ -1,6 +1,5 @@
 (ns namejen.sentences
-  (:require [clojure.java.io :as io]
-            [clojure.string :as string]
+  (:require [clojure.string :as string]
             [namejen.markov :refer [build-map-from-seqs
                                     generate-sequence]]))
 
@@ -37,7 +36,7 @@
   (defn- get-siddhartha []
     (if-let [s @siddhartha]
       s
-      (let [{:keys [exit err]}
+      (let [{:keys [exit]}
             (sh/sh "curl"
                    "https://www.gutenberg.org/cache/epub/2500/pg2500.txt"
                    "-o"
