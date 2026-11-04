@@ -96,7 +96,15 @@
   (apply git "add" paths)
   (git "commit" "-m" msg))
 
+(defn- assert-deploy-env! []
+  (let [missing (remove System/getenv ["CLOJARS_USERNAME" "CLOJARS_PASSWORD"])]
+    (when (seq missing)
+      (throw (ex-info (str "Missing env vars (see doc/releasing.md): "
+                           (string/join ", " missing))
+                      {})))))
+
 (defn deploy [_]
+  (assert-deploy-env!)
   (jar nil)
   (dd/deploy {:installer :remote
               :artifact (b/resolve-path (jar-file))
@@ -109,6 +117,7 @@
   tag, deploy to Clojars, bump to next -SNAPSHOT, commit, and push.
   "
   [_]
+  (assert-deploy-env!)
   (when-not (string/blank? (git "status" "--porcelain"))
     (throw (ex-info "Working tree is not clean." {})))
   (let [v (string/replace (version) #"-SNAPSHOT$" "")]
