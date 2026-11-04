@@ -25,6 +25,9 @@
 
 (defn- jar-file [] (format "target/%s-%s.jar" (name lib) (version)))
 
+(defn- pom-signature-file [] ; left in cwd by deps-deploy when signing
+  (format "%s-%s.pom.asc" (name lib) (version)))
+
 (defn- uber-file []
   (format "target/%s-%s-standalone.jar" (name lib) (version)))
 
@@ -109,7 +112,8 @@
   (dd/deploy {:installer :remote
               :artifact (b/resolve-path (jar-file))
               :pom-file (b/pom-path {:lib lib :class-dir class-dir})
-              :sign-releases? true}))
+              :sign-releases? true})
+  (b/delete {:path (pom-signature-file)}))
 
 (defn release
   "
